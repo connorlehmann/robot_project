@@ -12,7 +12,7 @@ pygame.display.update()
 while True:
     screen.fill((0, 0, 0))
     pygame.draw.rect(screen, (255, 0, 0), (400, 300, 100, 100))
-    pygame.draw.rect(screen, (255, 0, 0), (475, 375, 10, 10))
+    pygame.draw.rect(screen, (0, 0, 255), (475, 375, 10, 10))
 
 
     for event in pygame.event.get():
