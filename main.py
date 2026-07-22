@@ -10,7 +10,9 @@ robot = pygame.draw.rect(screen, (0, 255, 0), (400, 300, robot_x, robot_y))
 pygame.draw.rect(screen, (255, 0, 0), (400, 300, 50, 50))
 
 while True:
-
+    robot = pygame.draw.rect(screen, (0, 255, 0), (400, 300, robot_x, robot_y))
+    pygame.draw.rect(screen, (255, 0, 0), (400, 300, 50, 50))
+    
     for event in pygame.event.get():
 
         if pygame.key.get_pressed()[pygame.K_UP]:
