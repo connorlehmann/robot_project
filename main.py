@@ -15,7 +15,6 @@ while True:
     pygame.draw.rect(screen, (255, 0, 0), (400, 300, 100, 100))
     pygame.draw.rect(screen, (0, 0, 255), (475, 375, 10, 10))
 
-
     for event in pygame.event.get():
 
         if pygame.key.get_pressed()[pygame.K_UP]:
@@ -27,16 +26,11 @@ while True:
         if pygame.key.get_pressed()[pygame.K_RIGHT]:
             robot1.turn_right()
         
-        robot1.boundaries_check()
-        robot1.pos_update()
-            
-        robot = pygame.draw.rect(screen, (0, 255, 0), (robot1.pos_x, robot1.pos_y, 10, 10))
         
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
             
-        robot = pygame.draw.rect(screen, (0, 255, 0), (robot1.pos_x, robot1.pos_y, 10, 10))
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
@@ -47,3 +41,7 @@ while True:
             exit()
         
         pygame.display.update()
+
+    robot1.boundaries_check()
+    robot1.pos_update()
+    robot = pygame.draw.rect(screen, (0, 255, 0), (robot1.pos_x, robot1.pos_y, 10, 10))
