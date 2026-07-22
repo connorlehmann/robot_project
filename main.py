@@ -7,10 +7,12 @@ screen = pygame.display.set_mode((800, 600))
 robot_x = 400
 robot_y = 300
 robot = pygame.draw.rect(screen, (0, 255, 0), (robot_x, robot_y, 10, 10))
-pygame.draw.rect(screen, (255, 0, 0), (400, 300, 50, 50))
 pygame.display.update()
 
 while True:
+    screen.fill((0, 0, 0))
+    pygame.draw.rect(screen, (255, 0, 0), (400, 300, 50, 50))
+
 
     for event in pygame.event.get():
 
