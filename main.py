@@ -23,7 +23,7 @@ while True:
         if pygame.key.get_pressed()[pygame.K_RIGHT]:
             robot_x += 5
             
-            robot = pygame.draw.rect(screen, (0, 255, 0), (robot_x, robot_y, 10, 10))
+        robot = pygame.draw.rect(screen, (0, 255, 0), (robot_x, robot_y, 10, 10))
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
