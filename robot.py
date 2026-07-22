@@ -1,4 +1,4 @@
-import pygame
+import math
 
 class Robot:
     def __init__(self, name):
@@ -41,5 +41,5 @@ class Robot:
             self.velo = -5
 
     def pos_update(self):
-        self.pos_x += self.velo * pygame.math.cos(pygame.math.radians(self.theta))
-        self.pos_y -= self.velo * pygame.math.sin(pygame.math.radians(self.theta))
+        self.pos_x += self.velo * math.cos(math.degrees(self.theta))
+        self.pos_y -= self.velo * math.sin(math.degrees(self.theta))
