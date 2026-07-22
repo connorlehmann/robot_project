@@ -1,4 +1,4 @@
-from time import time
+import time
 
 import pygame
 from robot import Robot
