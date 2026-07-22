@@ -1,3 +1,5 @@
+from time import time
+
 import pygame
 from robot import Robot
 
@@ -45,3 +47,4 @@ while True:
     robot1.pos_update()
     robot_square = pygame.draw.rect(screen, (0, 255, 0), (robot1.pos_x, robot1.pos_y, 10, 10))
     pygame.display.update()
+    time.sleep(0.5)
