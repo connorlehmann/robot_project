@@ -12,6 +12,7 @@ pygame.display.update()
 while True:
     screen.fill((0, 0, 0))
     pygame.draw.rect(screen, (255, 0, 0), (400, 300, 100, 100))
+    pygame.draw.rect(screen, (255, 0, 0), (475, 375, 10, 10))
 
 
     for event in pygame.event.get():
@@ -27,12 +28,12 @@ while True:
         
         if robot_x < 400:
             robot_x = 400
-        elif robot_x > 500:
-            robot_x = 500
+        elif robot_x > 490:
+            robot_x = 490
         if robot_y < 300:
             robot_y = 300
-        elif robot_y > 400:
-            robot_y = 400
+        elif robot_y > 390:
+            robot_y = 390
             
         robot = pygame.draw.rect(screen, (0, 255, 0), (robot_x, robot_y, 10, 10))
         if event.type == pygame.QUIT:
