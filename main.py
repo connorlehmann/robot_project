@@ -19,15 +19,17 @@ while True:
     for event in pygame.event.get():
 
         if pygame.key.get_pressed()[pygame.K_UP]:
-            robot1.move_up()
+            robot1.speed_forward()
         if pygame.key.get_pressed()[pygame.K_DOWN]:
-            robot1.move_down()
+            robot1.speed_backward()
         if pygame.key.get_pressed()[pygame.K_LEFT]:
-            robot1.move_left()
+            robot1.turn_left()
         if pygame.key.get_pressed()[pygame.K_RIGHT]:
-            robot1.move_right()
+            robot1.turn_right()
         
         robot1.boundaries_check()
+        robot1.speed_check()
+        robot1.pos_update()
             
         robot = pygame.draw.rect(screen, (0, 255, 0), (robot1.pos_x, robot1.pos_y, 10, 10))
         
