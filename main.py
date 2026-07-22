@@ -1,14 +1,15 @@
 import pygame
+from robot import Robot, robot_x, robot_y
 
 pygame.init()
 
 screen = pygame.display.set_mode((800, 600))
 
-robot_x = 400
-robot_y = 300
-robot = pygame.draw.rect(screen, (0, 255, 0), (robot_x, robot_y, 10, 10))
+
+robot_square = pygame.draw.rect(screen, (0, 255, 0), (robot_x, robot_y, 10, 10))
 pygame.display.update()
 
+robot1 = Robot("Robo1")
 while True:
     screen.fill((0, 0, 0))
     pygame.draw.rect(screen, (255, 0, 0), (400, 300, 100, 100))
@@ -18,29 +19,29 @@ while True:
     for event in pygame.event.get():
 
         if pygame.key.get_pressed()[pygame.K_UP]:
-            robot_y -= 5
+            robot1.move_up()
         if pygame.key.get_pressed()[pygame.K_DOWN]:
-            robot_y += 5
+            robot1.move_down()
         if pygame.key.get_pressed()[pygame.K_LEFT]:
-            robot_x -= 5
+            robot1.move_left()
         if pygame.key.get_pressed()[pygame.K_RIGHT]:
-            robot_x += 5
+            robot1.move_right()
         
-        if robot_x < 400:
-            robot_x = 400
-        elif robot_x > 490:
-            robot_x = 490
-        if robot_y < 300:
-            robot_y = 300
-        elif robot_y > 390:
-            robot_y = 390
+        if robot1.robot_x < 400:
+            robot1.robot_x = 400
+        elif robot1.robot_x > 490:
+            robot1.robot_x = 490
+        if robot1.robot_y < 300:
+            robot1.robot_y = 300
+        elif robot1.robot_y > 390:
+            robot1.robot_y = 390
             
-        robot = pygame.draw.rect(screen, (0, 255, 0), (robot_x, robot_y, 10, 10))
+        robot = pygame.draw.rect(screen, (0, 255, 0), (robot1.robot_x, robot1.robot_y, 10, 10))
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
         
-        if robot_x == 475 and robot_y == 375:
+        if robot1.robot_x == 475 and robot1.robot_y == 375:
             print("Robot has reached the target!")
             pygame.quit()
             exit()
