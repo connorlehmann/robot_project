@@ -1,5 +1,5 @@
 import pygame
-from robot import Robot, pos_x, pos_y
+from robot import Robot
 
 pygame.init()
 
