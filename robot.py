@@ -35,5 +35,5 @@ class Robot:
             self.pos_y = 390
 
     def pos_update(self):
-        self.pos_x += self.velo * math.cos(math.degrees(self.theta))
-        self.pos_y -= self.velo * math.sin(math.degrees(self.theta))
+        self.pos_x += self.velo * math.cos(math.radians(self.theta))
+        self.pos_y -= self.velo * math.sin(math.radians(self.theta))
