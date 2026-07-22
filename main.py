@@ -17,9 +17,9 @@ while True:
     for event in pygame.event.get():
 
         if pygame.key.get_pressed()[pygame.K_UP]:
-            robot_y += 5
-        if pygame.key.get_pressed()[pygame.K_DOWN]:
             robot_y -= 5
+        if pygame.key.get_pressed()[pygame.K_DOWN]:
+            robot_y += 5
         if pygame.key.get_pressed()[pygame.K_LEFT]:
             robot_x -= 5
         if pygame.key.get_pressed()[pygame.K_RIGHT]:
