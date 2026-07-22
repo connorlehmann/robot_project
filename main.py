@@ -40,8 +40,8 @@ while True:
             pygame.quit()
             exit()
         
-        pygame.display.update()
 
     robot1.boundaries_check()
     robot1.pos_update()
-    robot = pygame.draw.rect(screen, (0, 255, 0), (robot1.pos_x, robot1.pos_y, 10, 10))
+    robot_square = pygame.draw.rect(screen, (0, 255, 0), (robot1.pos_x, robot1.pos_y, 10, 10))
+    pygame.display.update()
