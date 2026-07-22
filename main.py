@@ -27,11 +27,14 @@ while True:
         if pygame.key.get_pressed()[pygame.K_RIGHT]:
             robot1.move_right()
         
-        if robot1.pos_x < 400:
-            robot1.pos_x = 400
-        elif robot1.pos_x > 490:
-            robot1.pos_x = 490
-        if robot1.pos_y < 300:
+        robot1.boundaries_check()
+            
+        robot = pygame.draw.rect(screen, (0, 255, 0), (robot1.pos_x, robot1.pos_y, 10, 10))
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit()
+        
+        if robot1.pos_x == 475 and robot1.pos_y == 375:
             robot1.pos_y = 300
         elif robot1.pos_y > 390:
             robot1.pos_y = 390
