@@ -37,10 +37,10 @@ while True:
             pygame.quit()
             exit()
         
-        if robot1.pos_x == 475 and robot1.pos_y == 375:
-            print("Robot has reached the target!")
-            pygame.quit()
-            exit()
+    if robot1.pos_x == 475 and robot1.pos_y == 375:
+        print("Robot has reached the target!")
+        pygame.quit()
+        exit()
         
 
     robot1.boundaries_check()
