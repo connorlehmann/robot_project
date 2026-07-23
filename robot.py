@@ -9,10 +9,10 @@ class Robot:
         self.theta = 0
 
     def speed_forward(self):
-        self.velo = 5
+        self.velo = 15
 
     def speed_backward(self):
-        self.velo = -5
+        self.velo = -15
 
     def turn_right(self):
         self.theta -= (math.pi / 4)
