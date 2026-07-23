@@ -15,10 +15,10 @@ class Robot:
         self.velo = -5
 
     def turn_right(self):
-        self.theta -= (math.pi / 2)
+        self.theta -= (math.pi / 4)
     
     def turn_left(self):
-        self.theta += (math.pi / 2)
+        self.theta += (math.pi / 4)
 
     def move_down(self):
         self.pos_y += 5
