@@ -11,8 +11,11 @@ robot1 = Robot("Robo1")
 robot_square = pygame.draw.rect(screen, (0, 255, 0), (robot1.pos_x, robot1.pos_y, 10, 10))
 pygame.display.update()
 
+clock = pygame.time.Clock()
 
 while True:
+    dt = clock.tick(60) / 1000
+
     screen.fill((0, 0, 0))
     pygame.draw.rect(screen, (255, 0, 0), (400, 300, 100, 100))
     pygame.draw.rect(screen, (0, 0, 255), (475, 375, 10, 10))
@@ -47,4 +50,3 @@ while True:
     robot1.pos_update()
     robot_square = pygame.draw.rect(screen, (0, 255, 0), (robot1.pos_x, robot1.pos_y, 10, 10))
     pygame.display.update()
-    time.sleep(0.5)

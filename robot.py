@@ -1,4 +1,5 @@
 import math
+from main import dt
 
 class Robot:
     def __init__(self, name):
@@ -35,5 +36,5 @@ class Robot:
             self.pos_y = 390
 
     def pos_update(self):
-        self.pos_x += self.velo * math.cos(self.theta)
-        self.pos_y -= self.velo * math.sin(self.theta)
+        self.pos_x += self.velo * math.cos(self.theta) * dt
+        self.pos_y -= self.velo * math.sin(self.theta) * dt
