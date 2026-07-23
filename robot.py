@@ -1,5 +1,5 @@
 import math
-
+wheel_base = 20
 class Robot:
     def __init__(self, name):
         self.name = name
@@ -7,22 +7,34 @@ class Robot:
         self.pos_y = 300
         self.velo = 0
         self.theta = 0
+        self.left_speed = 0
+        self.right_speed = 0
 
-    def speed_forward(self):
-        self.velo = 15
-
-    def speed_backward(self):
-        self.velo = -15
-
-    def turn_right(self):
-        self.theta -= (math.pi / 4)
+    def left_up(self):
+        self.left_speed += 5
     
-    def turn_left(self):
-        self.theta += (math.pi / 4)
+    def left_down(self):
+        self.left_speed -= 5
+    
+    def right_up(self):
+        self.right_speed += 5
+    
+    def right_down(self):
+        self.right_speed -= 5
 
-    def move_down(self):
-        self.pos_y += 5
-        return self.pos_y
+    def speed_check(self):
+        if self.left_speed > 15:
+            self.left_speed = 15
+        elif self.left_speed < -15:
+            self.left_speed = -15
+        if self.right_speed > 15:
+            self.right_speed = 15
+        elif self.right_speed < -15:
+            self.right_speed = -15
+    
+    def total_velocity(self):
+        self.velo = (self.left_speed + self.right_speed) / 2
+        self.theta = (self.right_speed - self.left_speed) / wheel_base 
     
     def boundaries_check(self):
         if self.pos_x < 400:
