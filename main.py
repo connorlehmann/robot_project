@@ -25,13 +25,13 @@ while True:
             pygame.quit()
             exit()
             
-        if pygame.key.get_pressed()[[pygame.K_q]]:
+        if pygame.key.get_pressed()[pygame.K_q]:
             robot1.left_up()
-        if pygame.key.get_pressed()[[pygame.K_a]]:
+        if pygame.key.get_pressed()[pygame.K_a]:
             robot1.left_down()
-        if pygame.key.get_pressed()[[pygame.K_e]]:
+        if pygame.key.get_pressed()[pygame.K_e]:
             robot1.right_up()
-        if pygame.key.get_pressed()[[pygame.K_d]]:
+        if pygame.key.get_pressed()[pygame.K_d]:
             robot1.right_down()
 
     if  475 < robot1.pos_x < 485 and 375 < robot1.pos_y < 385:
