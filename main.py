@@ -17,13 +17,6 @@ font = pygame.font.Font(None, 36)
 
 while True:
     dt = clock.tick(60) / 1000
-    
-    left_text = font.render(f"Left Speed: {robot1.left_speed}", True, (255, 255, 255))
-    right_text = font.render(f"Right Speed: {robot1.right_speed}", True, (255, 255, 255))
-
-
-    screen.blit(left_text, (10, 10))
-    screen.blit(right_text, (10, 50))
 
 
     screen.fill((0, 0, 0))
@@ -54,4 +47,12 @@ while True:
     robot1.boundaries_check()
     robot1.pos_update(dt=dt)
     robot_square = pygame.draw.rect(screen, (0, 255, 0), (robot1.pos_x, robot1.pos_y, 10, 10))
+
+    left_text = font.render(f"Left Speed: {robot1.left_speed}", True, (255, 255, 255))
+    right_text = font.render(f"Right Speed: {robot1.right_speed}", True, (255, 255, 255))
+
+
+    screen.blit(left_text, (10, 10))
+    screen.blit(right_text, (10, 50))
+    
     pygame.display.update()
