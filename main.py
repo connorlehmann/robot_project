@@ -1,3 +1,4 @@
+import math
 import time
 
 import pygame
@@ -10,13 +11,6 @@ screen = pygame.display.set_mode((800, 600))
 robot1 = Robot("Robo1")
 
 robot_square = pygame.draw.rect(screen, (0, 255, 0), (robot1.pos_x, robot1.pos_y, 10, 10))
-pygame.draw.line(
-    screen,
-    (255, 255, 255),
-    (400, 300),
-    (500, 400),
-    width = 2
-)
 pygame.display.update()
 
 clock = pygame.time.Clock()
@@ -29,13 +23,10 @@ while True:
     screen.fill((0, 0, 0))
     pygame.draw.rect(screen, (255, 0, 0), (400, 300, 100, 100))
     pygame.draw.rect(screen, (0, 0, 255), (475, 375, 10, 10))
-    pygame.draw.line(
-    screen,
-    (255, 255, 255),
-    (400, 300),
-    (500, 400),
-    width = 2
-    )
+    pygame.draw.line(surface=screen, color=(255, 255, 255), 
+                     start_pos=(robot1.pos_x, robot1.pos_y), 
+                     end_pos=(math.cos(robot1.theta) * 50 + robot1.pos_x, math.sin(robot1.theta) * 50 + robot1.pos_y), 
+                     width=2)
 
 
     for event in pygame.event.get():
