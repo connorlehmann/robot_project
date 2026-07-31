@@ -29,6 +29,14 @@ while True:
     screen.fill((0, 0, 0))
     pygame.draw.rect(screen, (255, 0, 0), (400, 300, 100, 100))
     pygame.draw.rect(screen, (0, 0, 255), (475, 375, 10, 10))
+    pygame.draw.line(
+    screen,
+    (255, 255, 255),
+    (400, 300),
+    (500, 400),
+    width = 2
+    )
+
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
