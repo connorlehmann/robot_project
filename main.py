@@ -56,9 +56,10 @@ while True:
 
     left_text = font.render(f"Left Speed: {robot1.left_speed}", True, (255, 255, 255))
     right_text = font.render(f"Right Speed: {robot1.right_speed}", True, (255, 255, 255))
-
+    theta_text = font.render(f"Theta: {robot1.theta:.2f}", True, (255, 255, 255))
 
     screen.blit(left_text, (10, 10))
     screen.blit(right_text, (10, 50))
+    screen.blit(theta_text, (10, 90))
     
     pygame.display.update()
