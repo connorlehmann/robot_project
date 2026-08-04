@@ -25,8 +25,9 @@ while True:
     pygame.draw.rect(screen, (0, 0, 255), (475, 375, 10, 10))
     pygame.draw.line(surface=screen, color=(255, 255, 255), 
                      start_pos=(robot1.pos_x, robot1.pos_y), 
-                     end_pos=(math.cos(robot1.theta) * 50 + robot1.pos_x, math.sin(robot1.theta) * 50 + robot1.pos_y), 
-                     width=2)
+                     end_pos=(math.cos(robot1.theta) * 50 + robot1.pos_x, 
+                            robot1.pos_y - math.sin(robot1.theta) * 50), 
+                            width=2)
 
 
     for event in pygame.event.get():
@@ -61,5 +62,5 @@ while True:
     screen.blit(left_text, (10, 10))
     screen.blit(right_text, (10, 50))
     screen.blit(theta_text, (10, 90))
-    
+
     pygame.display.update()

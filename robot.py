@@ -6,7 +6,7 @@ class Robot:
         self.pos_x = 400
         self.pos_y = 300
         self.velo = 0
-        self.theta = math.pi
+        self.theta = 0
         self.angular_velo = 0
         self.left_speed = 0
         self.right_speed = 0
