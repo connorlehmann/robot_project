@@ -29,14 +29,36 @@ while True:
 
 
     #Needed for LiDAR calculations
-    wall_start1 = (400, 300) #Q
+    #Q
+    wall_start1 = (400, 300)
     wall_end1 = (500, 300)
-    wall_direction1 = vector_subtract(wall_start1, wall_end1) #S
-    robot_position = (robot1.pos_x, robot1.pos_y) #P
-    ray_direction = (math.cos(robot1.theta), -math.sin(robot1.theta)) #R
+    wall_start2 = (500, 300)
+    wall_end2 = (500, 400)
+    wall_start3 = (500, 400)
+    wall_end3 = (400, 400)
+    wall_start4 = (400, 400)
+    wall_end4 = (400, 300)
 
-    t = find_t(wall_start1, robot_position, wall_direction1, ray_direction)
-    u = find_u(wall_start1, robot_position, wall_direction1, ray_direction)
+    #S
+    wall_direction1 = vector_subtract(wall_start1, wall_end1)
+    wall_direction2 = vector_subtract(wall_start2, wall_end2)
+    wall_direction3 = vector_subtract(wall_start3, wall_end3)
+    wall_direction4 = vector_subtract(wall_start4, wall_end4)
+
+    #P
+    robot_position = (robot1.pos_x, robot1.pos_y)
+
+    #R
+    ray_direction = (math.cos(robot1.theta), -math.sin(robot1.theta))
+
+    t1 = find_t(wall_start1, robot_position, wall_direction1, ray_direction)
+    u1 = find_u(wall_start1, robot_position, wall_direction1, ray_direction)
+    t2 = find_t(wall_start2, robot_position, wall_direction2, ray_direction)
+    u2 = find_u(wall_start2, robot_position, wall_direction2, ray_direction)
+    t3 = find_t(wall_start3, robot_position, wall_direction3, ray_direction)
+    u3 = find_u(wall_start3, robot_position, wall_direction3, ray_direction)
+    t4 = find_t(wall_start4, robot_position, wall_direction4, ray_direction)
+    u4 = find_u(wall_start4, robot_position, wall_direction4, ray_direction)
 
 
 
@@ -76,7 +98,7 @@ while True:
     left_text = font.render(f"Left Speed: {robot1.left_speed}", True, (255, 255, 255))
     right_text = font.render(f"Right Speed: {robot1.right_speed}", True, (255, 255, 255))
     theta_text = font.render(f"Theta: {robot1.theta:.2f}", True, (255, 255, 255))
-    closest_wall_text = font.render(f"Closest Wall: {t:.2f}", True, (255, 255, 255))
+    closest_wall_text = font.render(f"Closest Wall: {min(t1, t2, t3, t4):.2f}", True, (255, 255, 255))
 
     screen.blit(left_text, (10, 10))
     screen.blit(right_text, (10, 50))
