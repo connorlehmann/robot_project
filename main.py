@@ -81,5 +81,6 @@ while True:
     screen.blit(left_text, (10, 10))
     screen.blit(right_text, (10, 50))
     screen.blit(theta_text, (10, 90))
+    screen.blit(closest_wall_text, (10, 130))
 
     pygame.display.update()
