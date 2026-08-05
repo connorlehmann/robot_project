@@ -1,6 +1,9 @@
 import math
 import time
 
+from math import find_t, find_u, vector_subtract, cross_product
+
+
 import pygame
 from robot import Robot
 
@@ -23,6 +26,21 @@ while True:
     screen.fill((0, 0, 0))
     pygame.draw.rect(screen, (255, 0, 0), (400, 300, 100, 100))
     pygame.draw.rect(screen, (0, 0, 255), (475, 375, 10, 10))
+
+
+    #Needed for LiDAR calculations
+    wall_start1 = (400, 300) #Q
+    wall_end1 = (500, 300)
+    wall_direction1 = vector_subtract(wall_start1, wall_end1) #S
+    robot_position = (robot1.pos_x, robot1.pos_y) #P
+    ray_direction = (math.cos(robot1.theta), -math.sin(robot1.theta)) #R
+
+    t = find_t(wall_start1, robot_position, wall_direction1, ray_direction)
+    u = find_u(wall_start1, robot_position, wall_direction1, ray_direction)
+
+
+
+
     pygame.draw.line(surface=screen, color=(255, 255, 255), 
                      start_pos=(robot1.pos_x, robot1.pos_y), 
                      end_pos=(math.cos(robot1.theta) * 50 + robot1.pos_x, 
@@ -58,6 +76,7 @@ while True:
     left_text = font.render(f"Left Speed: {robot1.left_speed}", True, (255, 255, 255))
     right_text = font.render(f"Right Speed: {robot1.right_speed}", True, (255, 255, 255))
     theta_text = font.render(f"Theta: {robot1.theta:.2f}", True, (255, 255, 255))
+    closest_wall_text = font.render(f"Closest Wall: {t:.2f}", True, (255, 255, 255))
 
     screen.blit(left_text, (10, 10))
     screen.blit(right_text, (10, 50))
