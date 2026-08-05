@@ -1,7 +1,7 @@
 import math
 import time
 
-from math import find_t, find_u, vector_subtract, cross_product
+from mymathcalc import find_t, find_u, vector_subtract, cross_product
 
 
 import pygame
