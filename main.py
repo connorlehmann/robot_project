@@ -99,14 +99,14 @@ while True:
     right_text = font.render(f"Right Speed: {robot1.right_speed}", True, (255, 255, 255))
     theta_text = font.render(f"Theta: {robot1.theta:.2f}", True, (255, 255, 255))
 
-    if [t1, t2, t3, t4] > [0, 0, 0, 0]:
-        closest_wall_text = font.render(f"Closest Wall: {min(t1, t2, t3, t4):.2f}", True, (255, 255, 255))
+
+    valid_t = [t for t in [t1, t2, t3, t4] if t >= 0]
+
+    if valid_t:
+        closest_wall_text = font.render(f"Closest Wall: {min(valid_t):.2f}", True, (255, 255, 255))
     else:
-        valid_t = [t for t in [t1, t2, t3, t4] if t >= 0]
-        if valid_t:
-            closest_wall_text = font.render(f"Closest Wall: {min(valid_t):.2f}", True, (255, 255, 255))
-        else:
-            closest_wall_text = font.render(f"Closest Wall: No intersection", True, (255, 255, 255))
+        closest_wall_text = font.render(f"Closest Wall: No intersection", True, (255, 255, 255))
+
 
 
     screen.blit(left_text, (10, 10))
