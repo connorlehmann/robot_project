@@ -49,16 +49,46 @@ while True:
     robot_position = (robot1.pos_x, robot1.pos_y)
 
     #R
-    ray_direction = (math.cos(robot1.theta), -math.sin(robot1.theta))
+    ray_direction_front = (math.cos(robot1.theta), -math.sin(robot1.theta))
+    ray_direction_left = (math.cos(robot1.theta + math.pi/2), -math.sin(robot1.theta + math.pi/2))
+    ray_direction_right = (math.cos(robot1.theta - math.pi/2), -math.sin(robot1.theta - math.pi/2))
+    ray_direction_back = (math.cos(robot1.theta + math.pi), -math.sin(robot1.theta + math.pi))
 
-    t1 = find_t(wall_start1, robot_position, wall_direction1, ray_direction)
-    u1 = find_u(wall_start1, robot_position, wall_direction1, ray_direction)
-    t2 = find_t(wall_start2, robot_position, wall_direction2, ray_direction)
-    u2 = find_u(wall_start2, robot_position, wall_direction2, ray_direction)
-    t3 = find_t(wall_start3, robot_position, wall_direction3, ray_direction)
-    u3 = find_u(wall_start3, robot_position, wall_direction3, ray_direction)
-    t4 = find_t(wall_start4, robot_position, wall_direction4, ray_direction)
-    u4 = find_u(wall_start4, robot_position, wall_direction4, ray_direction)
+    t1_front = find_t(wall_start1, robot_position, wall_direction1, ray_direction_front)
+    u1_front = find_u(wall_start1, robot_position, wall_direction1, ray_direction_front)
+    t2_front = find_t(wall_start2, robot_position, wall_direction2, ray_direction_front)
+    u2_front = find_u(wall_start2, robot_position, wall_direction2, ray_direction_front)
+    t3_front = find_t(wall_start3, robot_position, wall_direction3, ray_direction_front)
+    u3_front = find_u(wall_start3, robot_position, wall_direction3, ray_direction_front)
+    t4_front = find_t(wall_start4, robot_position, wall_direction4, ray_direction_front)
+    u4_front = find_u(wall_start4, robot_position, wall_direction4, ray_direction_front)
+
+    t1_left = find_t(wall_start1, robot_position, wall_direction1, ray_direction_left)
+    u1_left = find_u(wall_start1, robot_position, wall_direction1, ray_direction_left)
+    t2_left = find_t(wall_start2, robot_position, wall_direction2, ray_direction_left)
+    u2_left = find_u(wall_start2, robot_position, wall_direction2, ray_direction_left)
+    t3_left = find_t(wall_start3, robot_position, wall_direction3, ray_direction_left)
+    u3_left = find_u(wall_start3, robot_position, wall_direction3,  ray_direction_left)
+    t4_left = find_t(wall_start4, robot_position, wall_direction4, ray_direction_left)
+    u4_left = find_u(wall_start4, robot_position, wall_direction4, ray_direction_left) 
+
+    t1_right = find_t(wall_start1, robot_position, wall_direction1, ray_direction_right)
+    u1_right = find_u(wall_start1, robot_position, wall_direction1, ray_direction_right)
+    t2_right = find_t(wall_start2, robot_position, wall_direction2, ray_direction_right)
+    u2_right = find_u(wall_start2, robot_position, wall_direction2, ray_direction_right)
+    t3_right = find_t(wall_start3, robot_position, wall_direction3, ray_direction_right)
+    u3_right = find_u(wall_start3, robot_position, wall_direction3, ray_direction_right)
+    t4_right = find_t(wall_start4, robot_position, wall_direction4, ray_direction_right)
+    u4_right = find_u(wall_start4, robot_position, wall_direction4, ray_direction_right)
+
+    t1_back = find_t(wall_start1, robot_position, wall_direction1, ray_direction_back)
+    u1_back = find_u(wall_start1, robot_position, wall_direction1, ray_direction_back)
+    t2_back = find_t(wall_start2, robot_position, wall_direction2, ray_direction_back)
+    u2_back = find_u(wall_start2, robot_position, wall_direction2, ray_direction_back)
+    t3_back = find_t(wall_start3, robot_position, wall_direction3, ray_direction_back)
+    u3_back = find_u(wall_start3, robot_position, wall_direction3, ray_direction_back)
+    t4_back = find_t(wall_start4, robot_position, wall_direction4, ray_direction_back)
+    u4_back = find_u(wall_start4, robot_position, wall_direction4, ray_direction_back)
 
 
 
@@ -100,12 +130,30 @@ while True:
     theta_text = font.render(f"Theta: {robot1.theta:.2f}", True, (255, 255, 255))
 
 
-    valid_t = [t for t in [t1, t2, t3, t4] if t >= 0]
+    valid_t_front = [t for t in [t1_front, t2_front, t3_front, t4_front] if t >= 0]
+    valid_t_left = [t for t in [t1_left, t2_left, t3_left, t4_left] if t >= 0]
+    valid_t_right = [t for t in [t1_right, t2_right, t3_right, t4_right] if t >= 0]
+    valid_t_back = [t for t in [t1_back, t2_back, t3_back, t4_back] if t >= 0]
 
-    if valid_t:
-        closest_wall_text = font.render(f"Closest Wall: {min(valid_t):.2f}", True, (255, 255, 255))
+    if valid_t_front:
+        closest_wall_text = font.render(f"Front Closest Wall: {min(valid_t_front):.2f}", True, (255, 255, 255))
     else:
-        closest_wall_text = font.render(f"Closest Wall: No intersection", True, (255, 255, 255))
+        closest_wall_text = font.render(f"Front Closest Wall: No intersection", True, (255, 255, 255))
+
+    if valid_t_left:
+        closest_wall_text_left = font.render(f"Left Closest Wall: {min(valid_t_left):.2f}", True, (255, 255, 255))
+    else:
+        closest_wall_text_left = font.render(f"Left Closest Wall: No intersection", True, (255, 255, 255))
+
+    if valid_t_right:
+        closest_wall_text_right = font.render(f"Right Closest Wall: {min(valid_t_right):.2f}", True, (255, 255, 255))
+    else:
+        closest_wall_text_right = font.render(f"Right Closest Wall: No intersection", True, (255, 255, 255))
+
+    if valid_t_back:
+        closest_wall_text_back = font.render(f"Back Closest Wall: {min(valid_t_back):.2f}", True, (255, 255, 255))
+    else:
+        closest_wall_text_back = font.render(f"Back Closest Wall: No intersection", True, (255, 255, 255))
 
 
 
@@ -113,5 +161,8 @@ while True:
     screen.blit(right_text, (10, 50))
     screen.blit(theta_text, (10, 90))
     screen.blit(closest_wall_text, (10, 130))
+    screen.blit(closest_wall_text_left, (10, 170))
+    screen.blit(closest_wall_text_right, (10, 210))
+    screen.blit(closest_wall_text_back, (10, 250))
 
     pygame.display.update()
