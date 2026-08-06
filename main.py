@@ -135,25 +135,18 @@ while True:
     valid_t_right = [t for t in [t1_right, t2_right, t3_right, t4_right] if t >= 0]
     valid_t_back = [t for t in [t1_back, t2_back, t3_back, t4_back] if t >= 0]
 
-    if valid_t_front:
-        closest_wall_text = font.render(f"Front Closest Wall: {min(valid_t_front):.2f}", True, (255, 255, 255))
-    else:
-        closest_wall_text = font.render(f"Front Closest Wall: No intersection", True, (255, 255, 255))
+    closest_t_front = min(valid_t_front) if valid_t_front else None
+    closest_t_left = min(valid_t_left) if valid_t_left else None
+    closest_t_right = min(valid_t_right) if valid_t_right else None
+    closest_t_back = min(valid_t_back) if valid_t_back else None
 
-    if valid_t_left:
-        closest_wall_text_left = font.render(f"Left Closest Wall: {min(valid_t_left):.2f}", True, (255, 255, 255))
-    else:
-        closest_wall_text_left = font.render(f"Left Closest Wall: No intersection", True, (255, 255, 255))
+    closest_t = min(closest_t_front, closest_t_left, closest_t_right, closest_t_back) if any([closest_t_front, closest_t_left, closest_t_right, closest_t_back]) else None
 
-    if valid_t_right:
-        closest_wall_text_right = font.render(f"Right Closest Wall: {min(valid_t_right):.2f}", True, (255, 255, 255))
+    if closest_t is not None:
+        closest_wall_text = font.render(f"Front Closest Wall: {closest_t:.2f}", True, (255, 255, 255))
     else:
-        closest_wall_text_right = font.render(f"Right Closest Wall: No intersection", True, (255, 255, 255))
+        closest_wall_text = font.render("No wall detected", True, (255, 255, 255))
 
-    if valid_t_back:
-        closest_wall_text_back = font.render(f"Back Closest Wall: {min(valid_t_back):.2f}", True, (255, 255, 255))
-    else:
-        closest_wall_text_back = font.render(f"Back Closest Wall: No intersection", True, (255, 255, 255))
 
 
 
@@ -161,8 +154,5 @@ while True:
     screen.blit(right_text, (10, 50))
     screen.blit(theta_text, (10, 90))
     screen.blit(closest_wall_text, (10, 130))
-    screen.blit(closest_wall_text_left, (10, 170))
-    screen.blit(closest_wall_text_right, (10, 210))
-    screen.blit(closest_wall_text_back, (10, 250))
 
     pygame.display.update()
