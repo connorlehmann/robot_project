@@ -143,7 +143,7 @@ while True:
     closest_t = min(closest_t_front, closest_t_left, closest_t_right, closest_t_back) if any([closest_t_front, closest_t_left, closest_t_right, closest_t_back]) else None
 
     if closest_t is not None:
-        closest_wall_text = font.render(f"Front Closest Wall: {closest_t:.2f}", True, (255, 255, 255))
+        closest_wall_text = font.render(f"Closest Wall: {closest_t:.2f}", True, (255, 255, 255))
     else:
         closest_wall_text = font.render("No wall detected", True, (255, 255, 255))
 
