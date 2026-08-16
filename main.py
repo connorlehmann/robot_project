@@ -14,7 +14,7 @@ pygame.init()
 screen = pygame.display.set_mode((800, 600))
 robot1 = Robot("Robo1")
 
-robot_square = pygame.draw.rect(screen, (0, 255, 0), (robot1.pos_x, robot1.pos_y, 10, 10))
+
 pygame.display.update()
 
 clock = pygame.time.Clock()
@@ -133,7 +133,30 @@ while True:
     robot1.total_velocity()
     robot1.boundaries_check()
     robot1.pos_update(dt=dt)
-    robot_square = pygame.draw.rect(screen, (0, 255, 0), (robot1.pos_x, robot1.pos_y, 10, 10))
+    # Robot body
+    pygame.draw.circle(
+        screen,
+        (0, 255, 0),
+        (int(robot1.pos_x), int(robot1.pos_y)),
+        10
+    )
+
+    # Eyes
+    pygame.draw.circle(
+        screen,
+        (0, 0, 0),
+        (int(robot1.pos_x - 4), int(robot1.pos_y - 3)),
+        2
+    )
+
+    pygame.draw.circle(
+        screen,
+        (0, 0, 0),
+        (int(robot1.pos_x + 4), int(robot1.pos_y - 3)),
+        2
+    )
+
+
 
     left_text = font.render(f"Left Speed: {robot1.left_speed}", True, (255, 255, 255))
     right_text = font.render(f"Right Speed: {robot1.right_speed}", True, (255, 255, 255))
