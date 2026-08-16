@@ -163,7 +163,10 @@ while True:
     closest_t_back_text = font.render(f"Closest Back Wall: {closest_t_back:.2f}" if closest_t_back is not None else "No back wall detected", True, (255, 255, 255))
 
 
-
+    screen.blit(closest_t_right_text, (10, 170))
+    screen.blit(closest_t_left_text, (10, 210))
+    screen.blit(closest_t_front_text, (10, 250))
+    screen.blit(closest_t_back_text, (10, 290))
 
 
     screen.blit(left_text, (10, 10))
