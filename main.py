@@ -78,7 +78,7 @@ while True:
     t2_left = find_t(wall_start2, robot_position, wall_direction2, ray_direction_left)
     u2_left = find_u(wall_start2, robot_position, wall_direction2, ray_direction_left)
     t3_left = find_t(wall_start3, robot_position, wall_direction3, ray_direction_left)
-    u3_left = find_u(wall_start3, robot_position, wall_direction3,  ray_direction_left)
+    u3_left = find_u(wall_start3, robot_position, wall_direction3, ray_direction_left)
     t4_left = find_t(wall_start4, robot_position, wall_direction4, ray_direction_left)
     u4_left = find_u(wall_start4, robot_position, wall_direction4, ray_direction_left) 
 
@@ -134,6 +134,10 @@ while True:
     robot1.boundaries_check()
     robot1.pos_update(dt=dt)
 
+
+
+
+
     # Robot body
     cx = robot1.pos_x
     cy = robot1.pos_y
@@ -173,6 +177,7 @@ while True:
 
 
 
+
     left_text = font.render(f"Left Speed: {robot1.left_speed}", True, (255, 255, 255))
     right_text = font.render(f"Right Speed: {robot1.right_speed}", True, (255, 255, 255))
     theta_text = font.render(f"Theta: {robot1.theta:.2f}", True, (255, 255, 255))
@@ -200,12 +205,22 @@ while True:
     closest_t_front_text = font.render(f"Closest Front Wall: {closest_t_front:.2f}" if closest_t_front is not None else "No front wall detected", True, (255, 255, 255))
     closest_t_back_text = font.render(f"Closest Back Wall: {closest_t_back:.2f}" if closest_t_back is not None else "No back wall detected", True, (255, 255, 255))
 
+    closest_u_right_text = font.render(f"Closest Right Wall U: {u3_right:.2f}" if u3_right is not None else "No right wall detected", True, (255, 255, 255))
+    closest_u_left_text = font.render(f"Closest Left Wall U: {u3_left:.2f}" if u3_left is not None else "No left wall detected", True, (255, 255, 255))
+    closest_u_front_text = font.render(f"Closest Front Wall U: {u3_front:.2f}" if u3_front is not None else "No front wall detected", True, (255, 255, 255))
+    closest_u_back_text = font.render(f"Closest Back Wall U: {u3_back:.2f}" if u3_back is not None else "No back wall detected", True, (255, 255, 255))
+
+
+
 
     screen.blit(closest_t_right_text, (10, 170))
     screen.blit(closest_t_left_text, (10, 210))
     screen.blit(closest_t_front_text, (10, 250))
     screen.blit(closest_t_back_text, (10, 290))
-
+    screen.blit(closest_u_right_text, (10, 330))
+    screen.blit(closest_u_left_text, (10, 370))
+    screen.blit(closest_u_front_text, (10, 410))
+    screen.blit(closest_u_back_text, (10, 450))
 
     screen.blit(left_text, (10, 10))
     screen.blit(right_text, (10, 50))
