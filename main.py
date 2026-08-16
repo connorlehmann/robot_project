@@ -24,8 +24,17 @@ while True:
 
 
     screen.fill((0, 0, 0))
-    pygame.draw.rect(screen, (255, 0, 0), (400, 300, 100, 100))
-    pygame.draw.rect(screen, (0, 0, 255), (475, 375, 10, 10))
+
+    wall_boxes = [
+    pygame.Rect(400, 300, 100, 10),
+    pygame.Rect(490, 300, 10, 100),
+    pygame.Rect(400, 390, 100, 10),
+    pygame.Rect(400, 300, 10, 100)
+    ]
+
+    for wall in wall_boxes:
+        pygame.draw.rect(screen, (255, 0, 0), wall)
+
 
 
     #Needed for LiDAR calculations
