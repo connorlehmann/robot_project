@@ -1,5 +1,6 @@
 import math
 import time
+from types import NoneType
 
 from mymathcalc import find_t, find_u, vector_subtract, cross_product
 
@@ -155,6 +156,12 @@ while True:
         closest_wall_text = font.render(f"Closest Wall: {closest_t:.2f}", True, (255, 255, 255))
     else:
         closest_wall_text = font.render("No wall detected", True, (255, 255, 255))
+
+    closest_t_right_text = font.render(f"Closest Right Wall: {closest_t_right:.2f}" if closest_t_right is not None else "No right wall detected", True, (255, 255, 255))
+    closest_t_left_text = font.render(f"Closest Left Wall: {closest_t_left:.2f}" if closest_t_left is not None else "No left wall detected", True, (255, 255, 255))
+    closest_t_front_text = font.render(f"Closest Front Wall: {closest_t_front:.2f}" if closest_t_front is not None else "No front wall detected", True, (255, 255, 255))
+    closest_t_back_text = font.render(f"Closest Back Wall: {closest_t_back:.2f}" if closest_t_back is not None else "No back wall detected", True, (255, 255, 255))
+
 
 
 
