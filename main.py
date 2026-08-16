@@ -133,26 +133,41 @@ while True:
     robot1.total_velocity()
     robot1.boundaries_check()
     robot1.pos_update(dt=dt)
+
     # Robot body
+    cx = robot1.pos_x
+    cy = robot1.pos_y
+    radius = 10
+
     pygame.draw.circle(
         screen,
         (0, 255, 0),
-        (int(robot1.pos_x), int(robot1.pos_y)),
-        10
+        (int(cx), int(cy)),
+        radius
     )
 
-    # Eyes
+    # Distance of eyes from center
+    eye_distance = 6
+
+    # Eye positions relative to heading
+    left_eye_x = cx + math.cos(robot1.theta + math.pi / 4) * eye_distance
+    left_eye_y = cy - math.sin(robot1.theta + math.pi / 4) * eye_distance
+
+    right_eye_x = cx + math.cos(robot1.theta - math.pi / 4) * eye_distance
+    right_eye_y = cy - math.sin(robot1.theta - math.pi / 4) * eye_distance
+
+    # Draw eyes
     pygame.draw.circle(
         screen,
         (0, 0, 0),
-        (int(robot1.pos_x - 4), int(robot1.pos_y - 3)),
+        (int(left_eye_x), int(left_eye_y)),
         2
     )
 
     pygame.draw.circle(
         screen,
         (0, 0, 0),
-        (int(robot1.pos_x + 4), int(robot1.pos_y - 3)),
+        (int(right_eye_x), int(right_eye_y)),
         2
     )
 
