@@ -37,15 +37,16 @@ class Robot:
         self.velo = (self.left_speed + self.right_speed) / 2
         self.angular_velo = (self.right_speed - self.left_speed) / wheel_base 
     
-    def boundaries_check(self):
-        if self.pos_x < 400:
-            self.pos_x = 400
-        elif self.pos_x > 490:
-            self.pos_x = 490
-        if self.pos_y < 300:
-            self.pos_y = 300
-        elif self.pos_y > 390:
-            self.pos_y = 390
+    def boundaries_check(self, right_dist, left_dist, top_dist, bottom_dist):
+        if right_dist < 10:
+            print("Warning: Robot's right side is too close to the boundary!")
+        if left_dist < 10:
+            print("Warning: Robot's left side is too close to the boundary!")
+        if top_dist < 10:
+            print("Warning: Robot's top side is too close to the boundary!")
+        if bottom_dist < 10:
+            print("Warning: Robot's bottom side is too close to the boundary!")
+
 
     def pos_update(self, dt):
         self.theta += self.angular_velo * dt

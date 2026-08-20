@@ -230,4 +230,9 @@ while True:
     screen.blit(theta_text, (10, 90))
     screen.blit(closest_wall_text, (10, 130))
 
+    robot1.speed_check()
+    robot1.total_velocity()
+    robot1.boundaries_check(right_dist=closest_t_right, left_dist=closest_t_left, top_dist=closest_t_front, bottom_dist=closest_t_back)
+    robot1.pos_update(dt=dt)
+
     pygame.display.update()
