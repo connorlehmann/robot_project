@@ -132,12 +132,6 @@ while True:
         pygame.quit()
         exit()
         
-    robot1.speed_check()
-    robot1.total_velocity()
-    robot1.boundaries_check()
-    robot1.pos_update(dt=dt)
-
-
 
 
 
