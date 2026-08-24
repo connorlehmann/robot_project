@@ -227,9 +227,8 @@ while True:
     robot1.speed_check()
     robot1.total_velocity()
 
-    if robot1.boundaries_check(right_dist=closest_t_right, left_dist=closest_t_left, top_dist=closest_t_front, bottom_dist=closest_t_back):
-        # Handle boundary collision
-        pass
+    
+    robot1.boundaries_check(right_dist=closest_t_right, left_dist=closest_t_left, top_dist=closest_t_front, bottom_dist=closest_t_back)
 
     robot1.pos_update(dt=dt)
 
