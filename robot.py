@@ -40,20 +40,32 @@ class Robot:
     def boundaries_check(self, right_dist, left_dist, top_dist, bottom_dist):
         if right_dist < 10:
             print("Warning: Robot's right side is too close to the boundary!")
-            return True
         
         elif left_dist < 10:
             print("Warning: Robot's left side is too close to the boundary!")
-            return True
         
         elif top_dist < 10:
             print("Warning: Robot's top side is too close to the boundary!")
-            return True
         
         elif bottom_dist < 10:
             print("Warning: Robot's bottom side is too close to the boundary!")
-            return True
-        
+
+
+        if right_dist < 1:
+            self.right_speed = 0
+            self.left_speed = 0
+
+        if left_dist < 1:
+            self.right_speed = 0
+            self.left_speed = 0
+
+        if top_dist < 1:
+            self.right_speed = 0
+            self.left_speed = 0
+
+        if bottom_dist < 1:
+            self.right_speed = 0
+            self.left_speed = 0
         
 
 
