@@ -40,12 +40,24 @@ class Robot:
     def boundaries_check(self, right_dist, left_dist, top_dist, bottom_dist):
         if right_dist < 10:
             print("Warning: Robot's right side is too close to the boundary!")
-        if left_dist < 10:
+            return True
+        
+        elif left_dist < 10:
             print("Warning: Robot's left side is too close to the boundary!")
-        if top_dist < 10:
+            return True
+        
+        elif top_dist < 10:
             print("Warning: Robot's top side is too close to the boundary!")
-        if bottom_dist < 10:
+            return True
+        
+        elif bottom_dist < 10:
             print("Warning: Robot's bottom side is too close to the boundary!")
+            return True
+        
+        
+
+
+
 
 
     def pos_update(self, dt):
