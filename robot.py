@@ -3,8 +3,8 @@ wheel_base = 20
 class Robot:
     def __init__(self, name):
         self.name = name
-        self.pos_x = 400
-        self.pos_y = 300
+        self.pos_x = 445
+        self.pos_y = 350
         self.velo = 0
         self.theta = math.pi
         self.angular_velo = 0
