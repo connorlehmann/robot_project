@@ -127,6 +127,7 @@ while True:
             robot1.left_speed = 0
             robot1.right_speed = 0
 
+    pygame.draw.rect(screen, (255, 0, 0), (475, 375, 10, 10))
     if  475 < robot1.pos_x < 485 and 375 < robot1.pos_y < 385:
         print("Robot has reached the target!")
         pygame.quit()
