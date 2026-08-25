@@ -76,5 +76,6 @@ class Robot:
         self.pos_y -= self.velo * math.sin(self.theta) * dt
 
     def predict_dist_moved(self, dt):
-        self.next_distance = self.velo * dt
+        self.next_distance = abs(self.velo) * dt
+        return self.next_distance
 
