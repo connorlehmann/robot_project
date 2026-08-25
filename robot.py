@@ -10,6 +10,7 @@ class Robot:
         self.angular_velo = 0
         self.left_speed = 0
         self.right_speed = 0
+        self.next_distance = 0
 
     def left_up(self):
         self.left_speed += 5
@@ -66,10 +67,6 @@ class Robot:
         if bottom_dist < 1:
             self.right_speed = 0
             self.left_speed = 0
-        
-
-
-
 
 
     def pos_update(self, dt):
@@ -77,3 +74,7 @@ class Robot:
         
         self.pos_x += self.velo * math.cos(self.theta) * dt
         self.pos_y -= self.velo * math.sin(self.theta) * dt
+
+    def predict_dist_moved(self, dt):
+        self.next_distance = self.velo * dt
+
