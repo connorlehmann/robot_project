@@ -232,8 +232,15 @@ while True:
 
     next_distance = robot1.predict_dist_moved(dt=dt)
     
-    if closest_t > next_distance:
-        robot1.pos_update(dt=dt)
+    if robot1.velo > 0:
+        # moving forward
+        if closest_t_front is None or closest_t_front > next_distance:
+            robot1.pos_update(dt)
+
+    elif robot1.velo < 0:
+        # moving backward
+        if closest_t_back is None or closest_t_back > next_distance:
+            robot1.pos_update(dt)
     
 
     pygame.display.update()
