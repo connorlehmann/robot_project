@@ -180,33 +180,35 @@ while True:
     right_text = font.render(f"Right Speed: {robot1.right_speed}", True, (255, 255, 255))
     theta_text = font.render(f"Theta: {robot1.theta:.2f}", True, (255, 255, 255))
 
+    front_intersections = [(t1_front, u1_front), (t2_front, u2_front), (t3_front, u3_front), (t4_front, u4_front)]
+    left_intersections = [(t1_left, u1_left), (t2_left, u2_left), (t3_left, u3_left), (t4_left, u4_left)]
+    right_intersections = [(t1_right, u1_right), (t2_right, u2_right), (t3_right, u3_right), (t4_right, u4_right)]
+    back_intersections = [(t1_back, u1_back), (t2_back, u2_back), (t3_back, u3_back), (t4_back, u4_back)]
 
-    valid_t_front = [t for t in [t1_front, t2_front, t3_front, t4_front] if t >= 0]
-    valid_t_left = [t for t in [t1_left, t2_left, t3_left, t4_left] if t >= 0]
-    valid_t_right = [t for t in [t1_right, t2_right, t3_right, t4_right] if t >= 0]
-    valid_t_back = [t for t in [t1_back, t2_back, t3_back, t4_back] if t >= 0]
+    closest_front = min(front_intersections, key=lambda x: x[0])
+    closest_left = min(left_intersections, key=lambda x: x[0])
+    closest_right = min(right_intersections, key=lambda x: x[0])
+    closest_back = min(back_intersections, key=lambda x: x[0])
 
-    closest_t_front = min(valid_t_front) if valid_t_front else None
-    closest_t_left = min(valid_t_left) if valid_t_left else None
-    closest_t_right = min(valid_t_right) if valid_t_right else None
-    closest_t_back = min(valid_t_back) if valid_t_back else None
-
-    closest_t = min(closest_t_front, closest_t_left, closest_t_right, closest_t_back) if any([closest_t_front, closest_t_left, closest_t_right, closest_t_back]) else None
+    closest_t = min([t for t in [closest_front[0], closest_left[0], closest_right[0], closest_back[0]] if t is not None], default=None)
 
     if closest_t is not None:
         closest_wall_text = font.render(f"Closest Wall: {closest_t:.2f}", True, (255, 255, 255))
     else:
         closest_wall_text = font.render("No wall detected", True, (255, 255, 255))
 
-    closest_t_right_text = font.render(f"Closest Right Wall: {closest_t_right:.2f}" if closest_t_right is not None else "No right wall detected", True, (255, 255, 255))
-    closest_t_left_text = font.render(f"Closest Left Wall: {closest_t_left:.2f}" if closest_t_left is not None else "No left wall detected", True, (255, 255, 255))
-    closest_t_front_text = font.render(f"Closest Front Wall: {closest_t_front:.2f}" if closest_t_front is not None else "No front wall detected", True, (255, 255, 255))
-    closest_t_back_text = font.render(f"Closest Back Wall: {closest_t_back:.2f}" if closest_t_back is not None else "No back wall detected", True, (255, 255, 255))
 
-    closest_u_right_text = font.render(f"Closest Right Wall U: {u3_right:.2f}" if u3_right is not None else "No right wall detected", True, (255, 255, 255))
-    closest_u_left_text = font.render(f"Closest Left Wall U: {u3_left:.2f}" if u3_left is not None else "No left wall detected", True, (255, 255, 255))
-    closest_u_front_text = font.render(f"Closest Front Wall U: {u3_front:.2f}" if u3_front is not None else "No front wall detected", True, (255, 255, 255))
-    closest_u_back_text = font.render(f"Closest Back Wall U: {u3_back:.2f}" if u3_back is not None else "No back wall detected", True, (255, 255, 255))
+
+    #Display values
+    closest_t_right_text = font.render(f"Closest Right Wall: {closest_right[0]:.2f}" if closest_right[0] is not None else "No right wall detected", True, (255, 255, 255))
+    closest_t_left_text = font.render(f"Closest Left Wall: {closest_left[0]:.2f}" if closest_left[0] is not None else "No left wall detected", True, (255, 255, 255))
+    closest_t_front_text = font.render(f"Closest Front Wall: {closest_front[0]:.2f}" if closest_front[0] is not None else "No front wall detected", True, (255, 255, 255))
+    closest_t_back_text = font.render(f"Closest Back Wall: {closest_back[0]:.2f}" if closest_back[0] is not None else "No back wall detected", True, (255, 255, 255))
+
+    closest_u_right_text = font.render(f"Closest Right Wall U: {closest_right[1]:.2f}" if closest_right[1] is not None else "No right wall detected", True, (255, 255, 255))
+    closest_u_left_text = font.render(f"Closest Left Wall U: {closest_left[1]:.2f}" if closest_left[1] is not None else "No left wall detected", True, (255, 255, 255))
+    closest_u_front_text = font.render(f"Closest Front Wall U: {closest_front[1]:.2f}" if closest_front[1] is not None else "No front wall detected", True, (255, 255, 255))
+    closest_u_back_text = font.render(f"Closest Back Wall U: {closest_back[1]:.2f}" if closest_back[1] is not None else "No back wall detected", True, (255, 255, 255))
 
 
 
@@ -229,18 +231,18 @@ while True:
     robot1.total_velocity()
 
     
-    robot1.boundaries_check(right_dist=closest_t_right, left_dist=closest_t_left, top_dist=closest_t_front, bottom_dist=closest_t_back)
+    robot1.boundaries_check(right_dist=closest_right[0], left_dist=closest_left[0], top_dist=closest_front[0], bottom_dist=closest_back[0])
 
     next_distance = robot1.predict_dist_moved(dt=dt)
     
     if robot1.velo > 0:
         # moving forward
-        if closest_t_front is None or closest_t_front > next_distance:
+        if closest_front[0] is None or closest_front[0] > next_distance:
             robot1.pos_update(dt)
 
     elif robot1.velo < 0:
         # moving backward
-        if closest_t_back is None or closest_t_back > next_distance:
+        if closest_back[0] is None or closest_back[0] > next_distance:
             robot1.pos_update(dt)
     
 
