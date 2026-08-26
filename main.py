@@ -28,8 +28,8 @@ while True:
 
     wall_boxes = [
     pygame.Rect(400, 300, 100, 10),
-    pygame.Rect(490, 300, 10, 100),
-    pygame.Rect(400, 390, 100, 10),
+    pygame.Rect(500, 300, 10, 100),
+    pygame.Rect(400, 400, 100, 10),
     pygame.Rect(400, 300, 10, 100)
     ]
 
@@ -189,6 +189,7 @@ while True:
     closest_left = min(left_intersections, key=lambda x: x[0])
     closest_right = min(right_intersections, key=lambda x: x[0])
     closest_back = min(back_intersections, key=lambda x: x[0])
+    print(front_intersections)
 
     closest_t = min([t for t in [closest_front[0], closest_left[0], closest_right[0], closest_back[0]] if t is not None], default=None)
 
