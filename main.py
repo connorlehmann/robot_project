@@ -1,8 +1,7 @@
 import math
 import time
-from types import NoneType
 
-from mymathcalc import find_t, find_u, vector_subtract, cross_product
+from mymathcalc import ray_segment_intersect, vector_subtract, cross_product
 
 
 import pygame
@@ -49,11 +48,18 @@ while True:
     wall_start4 = (400, 400)
     wall_end4 = (400, 300)
 
-    #S
-    wall_direction1 = vector_subtract(wall_start1, wall_end1)
-    wall_direction2 = vector_subtract(wall_start2, wall_end2)
-    wall_direction3 = vector_subtract(wall_start3, wall_end3)
-    wall_direction4 = vector_subtract(wall_start4, wall_end4)
+    #S  (segment direction MUST go start -> end for u to range over [0, 1])
+    wall_direction1 = vector_subtract(wall_end1, wall_start1)
+    wall_direction2 = vector_subtract(wall_end2, wall_start2)
+    wall_direction3 = vector_subtract(wall_end3, wall_start3)
+    wall_direction4 = vector_subtract(wall_end4, wall_start4)
+
+    walls = [
+        (wall_start1, wall_direction1),
+        (wall_start2, wall_direction2),
+        (wall_start3, wall_direction3),
+        (wall_start4, wall_direction4),
+    ]
 
     #P
     robot_position = (robot1.pos_x, robot1.pos_y)
@@ -64,41 +70,20 @@ while True:
     ray_direction_right = (math.cos(robot1.theta - math.pi/2), -math.sin(robot1.theta - math.pi/2))
     ray_direction_back = (math.cos(robot1.theta + math.pi), -math.sin(robot1.theta + math.pi))
 
-    t1_front = find_t(wall_start1, robot_position, wall_direction1, ray_direction_front)
-    u1_front = find_u(wall_start1, robot_position, wall_direction1, ray_direction_front)
-    t2_front = find_t(wall_start2, robot_position, wall_direction2, ray_direction_front)
-    u2_front = find_u(wall_start2, robot_position, wall_direction2, ray_direction_front)
-    t3_front = find_t(wall_start3, robot_position, wall_direction3, ray_direction_front)
-    u3_front = find_u(wall_start3, robot_position, wall_direction3, ray_direction_front)
-    t4_front = find_t(wall_start4, robot_position, wall_direction4, ray_direction_front)
-    u4_front = find_u(wall_start4, robot_position, wall_direction4, ray_direction_front)
+    def closest_hit(ray_direction):
+        """Cast ray_direction from the robot and return the distance to the
+        nearest wall it actually hits, or None if it hits nothing."""
+        hits = [
+            ray_segment_intersect(robot_position, ray_direction, wall_q, wall_s)
+            for wall_q, wall_s in walls
+        ]
+        valid_hits = [h for h in hits if h is not None]
+        return min(valid_hits) if valid_hits else None
 
-    t1_left = find_t(wall_start1, robot_position, wall_direction1, ray_direction_left)
-    u1_left = find_u(wall_start1, robot_position, wall_direction1, ray_direction_left)
-    t2_left = find_t(wall_start2, robot_position, wall_direction2, ray_direction_left)
-    u2_left = find_u(wall_start2, robot_position, wall_direction2, ray_direction_left)
-    t3_left = find_t(wall_start3, robot_position, wall_direction3, ray_direction_left)
-    u3_left = find_u(wall_start3, robot_position, wall_direction3, ray_direction_left)
-    t4_left = find_t(wall_start4, robot_position, wall_direction4, ray_direction_left)
-    u4_left = find_u(wall_start4, robot_position, wall_direction4, ray_direction_left) 
-
-    t1_right = find_t(wall_start1, robot_position, wall_direction1, ray_direction_right)
-    u1_right = find_u(wall_start1, robot_position, wall_direction1, ray_direction_right)
-    t2_right = find_t(wall_start2, robot_position, wall_direction2, ray_direction_right)
-    u2_right = find_u(wall_start2, robot_position, wall_direction2, ray_direction_right)
-    t3_right = find_t(wall_start3, robot_position, wall_direction3, ray_direction_right)
-    u3_right = find_u(wall_start3, robot_position, wall_direction3, ray_direction_right)
-    t4_right = find_t(wall_start4, robot_position, wall_direction4, ray_direction_right)
-    u4_right = find_u(wall_start4, robot_position, wall_direction4, ray_direction_right)
-
-    t1_back = find_t(wall_start1, robot_position, wall_direction1, ray_direction_back)
-    u1_back = find_u(wall_start1, robot_position, wall_direction1, ray_direction_back)
-    t2_back = find_t(wall_start2, robot_position, wall_direction2, ray_direction_back)
-    u2_back = find_u(wall_start2, robot_position, wall_direction2, ray_direction_back)
-    t3_back = find_t(wall_start3, robot_position, wall_direction3, ray_direction_back)
-    u3_back = find_u(wall_start3, robot_position, wall_direction3, ray_direction_back)
-    t4_back = find_t(wall_start4, robot_position, wall_direction4, ray_direction_back)
-    u4_back = find_u(wall_start4, robot_position, wall_direction4, ray_direction_back)
+    front_dist = closest_hit(ray_direction_front)
+    left_dist = closest_hit(ray_direction_left)
+    right_dist = closest_hit(ray_direction_right)
+    back_dist = closest_hit(ray_direction_back)
 
 
 
@@ -180,18 +165,15 @@ while True:
     right_text = font.render(f"Right Speed: {robot1.right_speed}", True, (255, 255, 255))
     theta_text = font.render(f"Theta: {robot1.theta:.2f}", True, (255, 255, 255))
 
-    front_intersections = [(t1_front, u1_front), (t2_front, u2_front), (t3_front, u3_front), (t4_front, u4_front)]
-    left_intersections = [(t1_left, u1_left), (t2_left, u2_left), (t3_left, u3_left), (t4_left, u4_left)]
-    right_intersections = [(t1_right, u1_right), (t2_right, u2_right), (t3_right, u3_right), (t4_right, u4_right)]
-    back_intersections = [(t1_back, u1_back), (t2_back, u2_back), (t3_back, u3_back), (t4_back, u4_back)]
+    closest_front = front_dist
+    closest_left = left_dist
+    closest_right = right_dist
+    closest_back = back_dist
 
-    closest_front = min(front_intersections, key=lambda x: x[0])
-    closest_left = min(left_intersections, key=lambda x: x[0])
-    closest_right = min(right_intersections, key=lambda x: x[0])
-    closest_back = min(back_intersections, key=lambda x: x[0])
-    print(front_intersections)
-
-    closest_t = min([t for t in [closest_front[0], closest_left[0], closest_right[0], closest_back[0]] if t is not None], default=None)
+    closest_t = min(
+        [d for d in [closest_front, closest_left, closest_right, closest_back] if d is not None],
+        default=None,
+    )
 
     if closest_t is not None:
         closest_wall_text = font.render(f"Closest Wall: {closest_t:.2f}", True, (255, 255, 255))
@@ -201,27 +183,15 @@ while True:
 
 
     #Display values
-    closest_t_right_text = font.render(f"Closest Right Wall: {closest_right[0]:.2f}" if closest_right[0] is not None else "No right wall detected", True, (255, 255, 255))
-    closest_t_left_text = font.render(f"Closest Left Wall: {closest_left[0]:.2f}" if closest_left[0] is not None else "No left wall detected", True, (255, 255, 255))
-    closest_t_front_text = font.render(f"Closest Front Wall: {closest_front[0]:.2f}" if closest_front[0] is not None else "No front wall detected", True, (255, 255, 255))
-    closest_t_back_text = font.render(f"Closest Back Wall: {closest_back[0]:.2f}" if closest_back[0] is not None else "No back wall detected", True, (255, 255, 255))
-
-    closest_u_right_text = font.render(f"Closest Right Wall U: {closest_right[1]:.2f}" if closest_right[1] is not None else "No right wall detected", True, (255, 255, 255))
-    closest_u_left_text = font.render(f"Closest Left Wall U: {closest_left[1]:.2f}" if closest_left[1] is not None else "No left wall detected", True, (255, 255, 255))
-    closest_u_front_text = font.render(f"Closest Front Wall U: {closest_front[1]:.2f}" if closest_front[1] is not None else "No front wall detected", True, (255, 255, 255))
-    closest_u_back_text = font.render(f"Closest Back Wall U: {closest_back[1]:.2f}" if closest_back[1] is not None else "No back wall detected", True, (255, 255, 255))
-
-
-
+    closest_t_right_text = font.render(f"Closest Right Wall: {closest_right:.2f}" if closest_right is not None else "No right wall detected", True, (255, 255, 255))
+    closest_t_left_text = font.render(f"Closest Left Wall: {closest_left:.2f}" if closest_left is not None else "No left wall detected", True, (255, 255, 255))
+    closest_t_front_text = font.render(f"Closest Front Wall: {closest_front:.2f}" if closest_front is not None else "No front wall detected", True, (255, 255, 255))
+    closest_t_back_text = font.render(f"Closest Back Wall: {closest_back:.2f}" if closest_back is not None else "No back wall detected", True, (255, 255, 255))
 
     screen.blit(closest_t_right_text, (10, 170))
     screen.blit(closest_t_left_text, (10, 210))
     screen.blit(closest_t_front_text, (10, 250))
     screen.blit(closest_t_back_text, (10, 290))
-    screen.blit(closest_u_right_text, (10, 330))
-    screen.blit(closest_u_left_text, (10, 370))
-    screen.blit(closest_u_front_text, (10, 410))
-    screen.blit(closest_u_back_text, (10, 450))
 
     screen.blit(left_text, (10, 10))
     screen.blit(right_text, (10, 50))
@@ -232,18 +202,18 @@ while True:
     robot1.total_velocity()
 
     
-    robot1.boundaries_check(right_dist=closest_right[0], left_dist=closest_left[0], top_dist=closest_front[0], bottom_dist=closest_back[0])
+    robot1.boundaries_check(right_dist=closest_right, left_dist=closest_left, top_dist=closest_front, bottom_dist=closest_back)
 
     next_distance = robot1.predict_dist_moved(dt=dt)
     
     if robot1.velo > 0:
         # moving forward
-        if closest_front[0] is None or closest_front[0] > next_distance:
+        if closest_front is None or closest_front > next_distance:
             robot1.pos_update(dt)
 
     elif robot1.velo < 0:
         # moving backward
-        if closest_back[0] is None or closest_back[0] > next_distance:
+        if closest_back is None or closest_back > next_distance:
             robot1.pos_update(dt)
     
 

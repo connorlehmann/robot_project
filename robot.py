@@ -39,32 +39,34 @@ class Robot:
         self.angular_velo = (self.right_speed - self.left_speed) / wheel_base 
     
     def boundaries_check(self, right_dist, left_dist, top_dist, bottom_dist):
-        if right_dist < 10:
+        # A distance of None means that ray didn't hit any wall at all,
+        # so treat it as "far away" rather than crashing on `None < 10`.
+        if right_dist is not None and right_dist < 10:
             print("Warning: Robot's right side is too close to the boundary!")
-        
-        elif left_dist < 10:
+
+        elif left_dist is not None and left_dist < 10:
             print("Warning: Robot's left side is too close to the boundary!")
-        
-        elif top_dist < 10:
+
+        elif top_dist is not None and top_dist < 10:
             print("Warning: Robot's top side is too close to the boundary!")
-        
-        elif bottom_dist < 10:
+
+        elif bottom_dist is not None and bottom_dist < 10:
             print("Warning: Robot's bottom side is too close to the boundary!")
 
 
-        if right_dist < 1:
+        if right_dist is not None and right_dist < 1:
             self.right_speed = 0
             self.left_speed = 0
 
-        if left_dist < 1:
+        if left_dist is not None and left_dist < 1:
             self.right_speed = 0
             self.left_speed = 0
 
-        if top_dist < 1:
+        if top_dist is not None and top_dist < 1:
             self.right_speed = 0
             self.left_speed = 0
 
-        if bottom_dist < 1:
+        if bottom_dist is not None and bottom_dist < 1:
             self.right_speed = 0
             self.left_speed = 0
 
