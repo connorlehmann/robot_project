@@ -31,6 +31,9 @@ inner_walls = {"top": 300,
                "left": 400}
 
 
+wins = 0
+
+
 while True:
     dt = clock.tick(60) / 1000
 
@@ -122,7 +125,6 @@ while True:
     pygame.draw.rect(screen, (255, 255, 0), (470, 370, 15, 15))
 
 
-    wins = 0
     if  470 < robot1.pos_x < 485 and 370 < robot1.pos_y < 385:
         print("Robot has reached the target!")
         wins += 1
