@@ -193,7 +193,7 @@ while True:
     closest_t_left_text = font.render(f"Closest Left Wall: {left_dist:.2f}" if left_dist is not None else "No left wall detected", True, (255, 255, 255))
     closest_t_front_text = font.render(f"Closest Front Wall: {front_dist:.2f}" if front_dist is not None else "No front wall detected", True, (255, 255, 255))
     closest_t_back_text = font.render(f"Closest Back Wall: {back_dist:.2f}" if back_dist is not None else "No back wall detected", True, (255, 255, 255))
-    wins_text = font.render(f"Wins: {wins}")
+    wins_text = font.render(f"Wins: {wins}", True, (255,255,255))
 
     screen.blit(closest_t_right_text, (10, 170))
     screen.blit(closest_t_left_text, (10, 210))
