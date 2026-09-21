@@ -119,12 +119,14 @@ while True:
             robot1.left_speed = 0
             robot1.right_speed = 0
 
-    pygame.draw.rect(screen, (255, 255, 0), (475, 375, 10, 10))
-    if  475 < robot1.pos_x < 485 and 375 < robot1.pos_y < 385:
+    pygame.draw.rect(screen, (255, 255, 0), (470, 370, 15, 15))
+
+
+    wins = 0
+    if  470 < robot1.pos_x < 485 and 370 < robot1.pos_y < 385:
         print("Robot has reached the target!")
-        pygame.quit()
-        exit()
-        
+        wins += 1
+        robot1.reset()
 
 
 
@@ -191,11 +193,13 @@ while True:
     closest_t_left_text = font.render(f"Closest Left Wall: {left_dist:.2f}" if left_dist is not None else "No left wall detected", True, (255, 255, 255))
     closest_t_front_text = font.render(f"Closest Front Wall: {front_dist:.2f}" if front_dist is not None else "No front wall detected", True, (255, 255, 255))
     closest_t_back_text = font.render(f"Closest Back Wall: {back_dist:.2f}" if back_dist is not None else "No back wall detected", True, (255, 255, 255))
+    wins_text = font.render(f"Wins: {wins}")
 
     screen.blit(closest_t_right_text, (10, 170))
     screen.blit(closest_t_left_text, (10, 210))
     screen.blit(closest_t_front_text, (10, 250))
     screen.blit(closest_t_back_text, (10, 290))
+    screen.blit(wins_text, (10, 310))
 
     screen.blit(left_text, (10, 10))
     screen.blit(right_text, (10, 50))
@@ -222,5 +226,5 @@ while True:
     
     if robot1.collision_check(10, top_wall=inner_walls["top"], bottom_wall=inner_walls["bottom"], left_wall=inner_walls["left"], right_wall=inner_walls["right"]):
         robot1.reset()
-        
+
     pygame.display.update()
