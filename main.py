@@ -18,6 +18,18 @@ pygame.display.update()
 
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 36)
+wall_boxes = [
+pygame.Rect(400, 290, 100, 10),   # top    
+pygame.Rect(500, 300, 10, 100),   # right  
+pygame.Rect(400, 400, 100, 10),   # bottom 
+pygame.Rect(390, 300, 10, 100),   # left   
+]
+
+inner_walls = {"top": 300,
+               "bottom": 400,
+               "right": 500,
+               "left": 400}
+
 
 while True:
     dt = clock.tick(60) / 1000
@@ -25,12 +37,7 @@ while True:
 
     screen.fill((0, 0, 0))
 
-    wall_boxes = [
-    pygame.Rect(400, 300, 100, 10),
-    pygame.Rect(500, 300, 10, 100),
-    pygame.Rect(400, 400, 100, 10),
-    pygame.Rect(400, 300, 10, 100)
-    ]
+
 
     for wall in wall_boxes:
         pygame.draw.rect(screen, (255, 0, 0), wall)
@@ -165,13 +172,10 @@ while True:
     right_text = font.render(f"Right Speed: {robot1.right_speed}", True, (255, 255, 255))
     theta_text = font.render(f"Theta: {robot1.theta:.2f}", True, (255, 255, 255))
 
-    closest_front = front_dist
-    closest_left = left_dist
-    closest_right = right_dist
-    closest_back = back_dist
+
 
     closest_t = min(
-        [d for d in [closest_front, closest_left, closest_right, closest_back] if d is not None],
+        [d for d in [front_dist, left_dist, right_dist, back_dist] if d is not None],
         default=None,
     )
 
@@ -183,10 +187,10 @@ while True:
 
 
     #Display values
-    closest_t_right_text = font.render(f"Closest Right Wall: {closest_right:.2f}" if closest_right is not None else "No right wall detected", True, (255, 255, 255))
-    closest_t_left_text = font.render(f"Closest Left Wall: {closest_left:.2f}" if closest_left is not None else "No left wall detected", True, (255, 255, 255))
-    closest_t_front_text = font.render(f"Closest Front Wall: {closest_front:.2f}" if closest_front is not None else "No front wall detected", True, (255, 255, 255))
-    closest_t_back_text = font.render(f"Closest Back Wall: {closest_back:.2f}" if closest_back is not None else "No back wall detected", True, (255, 255, 255))
+    closest_t_right_text = font.render(f"Closest Right Wall: {right_dist:.2f}" if right_dist is not None else "No right wall detected", True, (255, 255, 255))
+    closest_t_left_text = font.render(f"Closest Left Wall: {left_dist:.2f}" if left_dist is not None else "No left wall detected", True, (255, 255, 255))
+    closest_t_front_text = font.render(f"Closest Front Wall: {front_dist:.2f}" if front_dist is not None else "No front wall detected", True, (255, 255, 255))
+    closest_t_back_text = font.render(f"Closest Back Wall: {back_dist:.2f}" if back_dist is not None else "No back wall detected", True, (255, 255, 255))
 
     screen.blit(closest_t_right_text, (10, 170))
     screen.blit(closest_t_left_text, (10, 210))
@@ -202,19 +206,21 @@ while True:
     robot1.total_velocity()
 
     
-    robot1.boundaries_check(right_dist=closest_right, left_dist=closest_left, top_dist=closest_front, bottom_dist=closest_back)
+    robot1.boundaries_check(right_dist=right_dist, left_dist=left_dist, top_dist=front_dist, bottom_dist=back_dist)
 
     next_distance = robot1.predict_dist_moved(dt=dt)
     
     if robot1.velo > 0:
         # moving forward
-        if closest_front is None or closest_front > next_distance:
+        if front_dist is None or front_dist > next_distance:
             robot1.pos_update(dt)
 
     elif robot1.velo < 0:
         # moving backward
-        if closest_back is None or closest_back > next_distance:
+        if back_dist is None or back_dist > next_distance:
             robot1.pos_update(dt)
     
-
+    if robot1.collision_check(10, top_wall=inner_walls["top"], bottom_wall=inner_walls["bottom"], left_wall=inner_walls["left"], right_wall=inner_walls["right"]):
+        robot1.reset()
+        
     pygame.display.update()

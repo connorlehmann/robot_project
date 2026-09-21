@@ -3,6 +3,9 @@ wheel_base = 20
 class Robot:
     def __init__(self, name):
         self.name = name
+        self.reset()
+
+    def reset(self):
         self.pos_x = 445
         self.pos_y = 350
         self.velo = 0
@@ -11,6 +14,24 @@ class Robot:
         self.left_speed = 0
         self.right_speed = 0
         self.next_distance = 0
+
+    def collision_check(self, radius, top_wall, bottom_wall, left_wall, right_wall):
+        collision = False
+
+        if self.pos_x + radius >= right_wall:
+            collision = True
+        if self.pos_x - radius <= left_wall:
+            collision = True
+        if self.pos_y + radius >= bottom_wall:
+            collision = True
+        if self.pos_y - radius <= top_wall:
+            collision = True
+        
+        
+
+        return collision
+
+        
 
     def left_up(self):
         self.left_speed += 5
