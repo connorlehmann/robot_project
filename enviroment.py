@@ -17,14 +17,13 @@ def closest_hit(robot_position, ray_direction, walls):
     return min(valid_hits) if valid_hits else None
 
 
-
 """RL MODEL
 """
 class RobotEnv(gym.Env):
     def __init__(self):
         super().__init__()
 
-        """Observation and action space setup
+        """Observation and Action Space Setup
         """
         self.action_space = spaces.Discrete(3)
         self.observation_space = spaces.Box(...)  # fill in shape once you pick your obs
@@ -34,7 +33,6 @@ class RobotEnv(gym.Env):
         """Robot Setup
         """
         self.robot1 = Robot("Robo1")
-        self.robot_position = (self.robot1.pos_x, self.robot1.pos_y)
 
 
 
@@ -76,12 +74,21 @@ class RobotEnv(gym.Env):
 
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
-        self.robot.reset()
+
+        """Resetting Robot and Returning Observation
+        """
+        self.robot1.reset()
         obs = self._get_obs()
         return obs, {}
 
-    def step(self, action):
-        self._apply_action(action)
+
+    def _get_obs(self):
+
+        """Finding Robot Position
+        """
+        robot_position = (self.robot1.pos_x, self.robot1.pos_y)
+
+
 
         """Ray Direction and Distance Calulations
         """
@@ -90,10 +97,67 @@ class RobotEnv(gym.Env):
         ray_direction_right = (math.cos(self.robot1.theta - math.pi/2), -math.sin(self.robot1.theta - math.pi/2))
         ray_direction_back = (math.cos(self.robot1.theta + math.pi), -math.sin(self.robot1.theta + math.pi))
 
-        self.front_dist = closest_hit(self.robot_position, ray_direction_front, self.walls)
-        self.left_dist = closest_hit(self.robot_position, ray_direction_left, self.walls)
-        self.right_dist = closest_hit(self.robot_position, ray_direction_right, self.walls)
-        self.back_dist = closest_hit(self.robot_position, ray_direction_back, self.walls)
+        self.front_dist = closest_hit(robot_position, ray_direction_front, self.walls)
+        self.left_dist = closest_hit(robot_position, ray_direction_left, self.walls)
+        self.right_dist = closest_hit(robot_position, ray_direction_right, self.walls)
+        self.back_dist = closest_hit(robot_position, ray_direction_back, self.walls)
+
+
+
+        """Treating None Types
+        """
+        if self.front_dist == None:
+            self.front_dist = 100
+        if self.left_dist == None:
+            self.left_dist = 100
+        if self.back_dist == None:
+            self.back_dist = 100
+        if self.right_dist == None:
+            self.right_dist = 100
+
+    def _apply_action(self):
+
+
+    def _check_collision(self):
+
+        """Collision Check
+        """
+        if self.robot1.collision_check(10, top_wall=self.inner_walls["top"], bottom_wall=self.inner_walls["bottom"], left_wall=self.inner_walls["left"], right_wall=self.inner_walls["right"]):
+            return True
+        else:
+            return False
+
+
+    def _check_goal(self):
+
+        """Goal Check
+        """
+        if  470 < self.robot1.pos_x < 485 and 370 < self.robot1.pos_y < 385:
+            return True
+        else:
+            return False
+
+    
+    def step(self, action):
+        self._apply_action(action)
+
+        """Finding Robot Position
+        """
+        robot_position = (self.robot1.pos_x, self.robot1.pos_y)
+
+
+
+        """Ray Direction and Distance Calulations
+        """
+        ray_direction_front = (math.cos(self.robot1.theta), -math.sin(self.robot1.theta))
+        ray_direction_left = (math.cos(self.robot1.theta + math.pi/2), -math.sin(self.robot1.theta + math.pi/2))
+        ray_direction_right = (math.cos(self.robot1.theta - math.pi/2), -math.sin(self.robot1.theta - math.pi/2))
+        ray_direction_back = (math.cos(self.robot1.theta + math.pi), -math.sin(self.robot1.theta + math.pi))
+
+        self.front_dist = closest_hit(robot_position, ray_direction_front, self.walls)
+        self.left_dist = closest_hit(robot_position, ray_direction_left, self.walls)
+        self.right_dist = closest_hit(robot_position, ray_direction_right, self.walls)
+        self.back_dist = closest_hit(robot_position, ray_direction_back, self.walls)
 
 
 
@@ -125,12 +189,8 @@ class RobotEnv(gym.Env):
 
 
 
-        """Reseting position if wall is hit
+        """Checking Terminated and Returning Step Info
         """
-        if self.robot1.collision_check(10, top_wall=self.inner_walls["top"], bottom_wall=self.inner_walls["bottom"], left_wall=self.inner_walls["left"], right_wall=self.inner_walls["right"]):
-            self.robot1.reset()
-
-
         terminated = self._check_collision() or self._check_goal()
         reward = 0  # placeholder until Day 8
         obs = self._get_obs()
