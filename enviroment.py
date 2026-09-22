@@ -97,23 +97,30 @@ class RobotEnv(gym.Env):
         ray_direction_right = (math.cos(self.robot1.theta - math.pi/2), -math.sin(self.robot1.theta - math.pi/2))
         ray_direction_back = (math.cos(self.robot1.theta + math.pi), -math.sin(self.robot1.theta + math.pi))
 
-        self.front_dist = closest_hit(robot_position, ray_direction_front, self.walls)
-        self.left_dist = closest_hit(robot_position, ray_direction_left, self.walls)
-        self.right_dist = closest_hit(robot_position, ray_direction_right, self.walls)
-        self.back_dist = closest_hit(robot_position, ray_direction_back, self.walls)
+        front_dist = closest_hit(robot_position, ray_direction_front, self.walls)
+        left_dist = closest_hit(robot_position, ray_direction_left, self.walls)
+        right_dist = closest_hit(robot_position, ray_direction_right, self.walls)
+        back_dist = closest_hit(robot_position, ray_direction_back, self.walls)
 
 
 
         """Treating None Types
         """
-        if self.front_dist == None:
-            self.front_dist = 100
-        if self.left_dist == None:
-            self.left_dist = 100
-        if self.back_dist == None:
-            self.back_dist = 100
-        if self.right_dist == None:
-            self.right_dist = 100
+        maximum = 150
+        if front_dist is None:
+            front_dist = maximum
+        if left_dist is None:
+            left_dist = maximum
+        if back_dist is None:
+            back_dist = maximum
+        if right_dist is None:
+            right_dist = maximum
+
+        scaled_front = front_dist/150
+        scaled_back = back_dist/150
+        scaled_left = left_dist/150
+        scaled_right = right_dist/150
+
 
     def _apply_action(self):
 
