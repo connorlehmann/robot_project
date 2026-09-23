@@ -137,9 +137,13 @@ class RobotEnv(gym.Env):
         world_angle = math.atan2(-dy, dx)
         proper_turn_angle = world_angle - self.robot1.theta
         normalized_turn_angle =(proper_turn_angle + math.pi) % (2 * math.pi) - math.pi
+        scaled_turn_angle = normalized_turn_angle / math.pi
 
 
 
+        """Returning Obs
+        """
+        return np.array([scaled_front, scaled_back, scaled_left, scaled_right, scaled_turn_angle], dtype=np.float32)
 
 
     def _apply_action(self):
