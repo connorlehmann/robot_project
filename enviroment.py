@@ -65,6 +65,8 @@ class RobotEnv(gym.Env):
             (self.wall_start4, self.wall_direction4),
         ]
 
+        self.goal = (477.5, 377.5)
+
 
 
         """Time/dt Setup
@@ -116,10 +118,28 @@ class RobotEnv(gym.Env):
         if right_dist is None:
             right_dist = maximum
 
-        scaled_front = front_dist/150
-        scaled_back = back_dist/150
-        scaled_left = left_dist/150
-        scaled_right = right_dist/150
+        scaled_front = front_dist/maximum
+        scaled_back = back_dist/maximum
+        scaled_left = left_dist/maximum
+        scaled_right = right_dist/maximum
+
+
+
+        """Finding Dx and Dy
+        """
+        dx = self.goal[0] - robot_position[0]
+        dy = self.goal[1] - robot_position[1]
+
+
+
+        """Angle to Goal
+        """
+        world_angle = math.atan2(-dy, dx)
+        proper_turn_angle = world_angle - self.robot1.theta
+        normalized_turn_angle =(proper_turn_angle + math.pi) % (2 * math.pi) - math.pi
+
+
+
 
 
     def _apply_action(self):
