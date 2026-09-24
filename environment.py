@@ -233,11 +233,13 @@ class RobotEnv(gym.Env):
 
         """Checking Terminated and Returning Step Info
         """
-        terminated = self._check_collision() or self._check_goal()
+        collided = self._check_collision
+        reached_goal = self._check_goal
+        terminated = collided or reached_goal
         
-        if self._check_goal():
+        if reached_goal:
             reward = 100
-        elif self._check_collision():
+        elif collided:
             reward = -50
         else:
             reward = -.1
