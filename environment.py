@@ -78,6 +78,7 @@ class RobotEnv(gym.Env):
         self.dt = 1/60
 
 
+
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
 
@@ -233,6 +234,13 @@ class RobotEnv(gym.Env):
         """Checking Terminated and Returning Step Info
         """
         terminated = self._check_collision() or self._check_goal()
-        reward = 0  # placeholder until Day 8
+        
+        if self._check_goal():
+            reward = 100
+        elif self._check_collision():
+            reward = -50
+        else:
+            reward = -.1
+
         obs = self._get_obs()
         return obs, reward, terminated, False, {}
