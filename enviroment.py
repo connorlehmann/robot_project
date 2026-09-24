@@ -26,7 +26,11 @@ class RobotEnv(gym.Env):
         """Observation and Action Space Setup
         """
         self.action_space = spaces.Discrete(5)
-        self.observation_space = spaces.Box(...)  # fill in shape once you pick your obs
+        self.observation_space = spaces.Box(
+            low=np.array([0, 0, 0, 0, -1], dtype=np.float32),
+            high=np.array([1, 1, 1, 1, 1], dtype=np.float32),
+            dtype=np.float32
+        )
 
 
 
