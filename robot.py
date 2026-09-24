@@ -15,6 +15,14 @@ class Robot:
         self.right_speed = 0
         self.next_distance = 0
 
+    def full_forward(self):
+        self.left_speed = 15
+        self.right_speed = 15
+
+    def full_backward(self):
+        self.left_speed = -15
+        self.right_speed = -15
+
     def collision_check(self, radius, top_wall, bottom_wall, left_wall, right_wall):
         collision = False
 

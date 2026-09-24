@@ -25,7 +25,7 @@ class RobotEnv(gym.Env):
 
         """Observation and Action Space Setup
         """
-        self.action_space = spaces.Discrete(3)
+        self.action_space = spaces.Discrete(5)
         self.observation_space = spaces.Box(...)  # fill in shape once you pick your obs
 
 
@@ -146,7 +146,9 @@ class RobotEnv(gym.Env):
         return np.array([scaled_front, scaled_back, scaled_left, scaled_right, scaled_turn_angle], dtype=np.float32)
 
 
-    def _apply_action(self):
+    def _apply_action(self, action):
+        if action == 0:
+            
 
 
     def _check_collision(self):
