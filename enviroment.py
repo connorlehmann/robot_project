@@ -171,13 +171,8 @@ class RobotEnv(gym.Env):
 
 
     def _check_goal(self):
-
-        """Goal Check
-        """
-        if  470 < self.robot1.pos_x < 485 and 370 < self.robot1.pos_y < 385:
-            return True
-        else:
-            return False
+        distance = math.hypot(self.robot1.pos_x - self.goal[0], self.robot1.pos_y - self.goal[1])
+        return distance < 15
 
     
     def step(self, action):
@@ -219,15 +214,7 @@ class RobotEnv(gym.Env):
 
         """Determining if next move is possible
         """
-        if self.robot1.velo > 0:
-            # moving forward
-            if self.front_dist is None or self.front_dist > next_distance:
-                self.robot1.pos_update(self.dt)
-
-        elif self.robot1.velo < 0:
-            # moving backward
-            if self.back_dist is None or self.back_dist > next_distance:
-                self.robot1.pos_update(self.dt)
+        self.robot1.pos_update(self.dt)
 
 
 

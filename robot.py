@@ -15,6 +15,14 @@ class Robot:
         self.right_speed = 0
         self.next_distance = 0
 
+    def turn_right(self):
+        self.left_speed = 15
+        self.right_speed = -15
+
+    def turn_left(self):
+        self.left_speed = -15
+        self.right_speed = 15
+        
     def full_forward(self):
         self.left_speed = 15
         self.right_speed = 15
