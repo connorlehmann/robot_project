@@ -12,3 +12,10 @@ for action in actions_to_try:
     if terminated:
         print("Episode ended, resetting")
         obs, info = env.reset()
+
+from stable_baselines3.common.env_checker import check_env
+from environment import RobotEnv
+
+env = RobotEnv()
+check_env(env, warn=True)
+print("check_env passed")
