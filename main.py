@@ -215,16 +215,18 @@ while True:
     robot1.boundaries_check(right_dist=right_dist, left_dist=left_dist, top_dist=front_dist, bottom_dist=back_dist)
 
     next_distance = robot1.predict_dist_moved(dt=dt)
-    
+    """
     if robot1.velo > 0:
         # moving forward
-        if front_dist is None or front_dist > next_distance:
-            robot1.pos_update(dt)
+        if front_dist is None or front_dist > next_distance:"""
+    robot1.pos_update(dt)
 
+    """
     elif robot1.velo < 0:
         # moving backward
         if back_dist is None or back_dist > next_distance:
             robot1.pos_update(dt)
+    """
     
     if robot1.collision_check(10, top_wall=inner_walls["top"], bottom_wall=inner_walls["bottom"], left_wall=inner_walls["left"], right_wall=inner_walls["right"]):
         robot1.reset()
