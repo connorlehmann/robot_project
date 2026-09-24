@@ -175,12 +175,20 @@ class RobotEnv(gym.Env):
 
 
     def _check_goal(self):
+
+        """Checking Goal (Radius = 15)
+        """
         distance = math.hypot(self.robot1.pos_x - self.goal[0], self.robot1.pos_y - self.goal[1])
         return distance < 15
 
     
     def step(self, action):
+
+        """Apply Action Each Step
+        """
         self._apply_action(action)
+
+
 
         """Finding Robot Position
         """
