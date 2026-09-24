@@ -155,9 +155,9 @@ class RobotEnv(gym.Env):
         if action == 2:
             self.robot1.full_backward()
         if action == 3:
-            self.robot1.right_up()
+            self.robot1.turn_right()
         if action == 4:
-            self.robot1.left_up()            
+            self.robot1.turn_left()          
 
 
     def _check_collision(self):
