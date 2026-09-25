@@ -194,7 +194,7 @@ class RobotEnv(gym.Env):
         """Finding Robot Position
         """
         robot_position = (self.robot1.pos_x, self.robot1.pos_y)
-
+        prev_distance = math.hypot(self.robot1.pos_x - self.goal[0], self.robot1.pos_y - self.goal[1]) 
 
 
         """Ray Direction and Distance Calulations
@@ -221,8 +221,6 @@ class RobotEnv(gym.Env):
         """Checking Robot Position and Next Move
         """
         self.robot1.boundaries_check(right_dist=self.right_dist, left_dist=self.left_dist, top_dist=self.front_dist, bottom_dist=self.back_dist)
-        next_distance = self.robot1.predict_dist_moved(dt=self.dt)
-
 
 
         """Determining if next move is possible
@@ -236,11 +234,17 @@ class RobotEnv(gym.Env):
         collided = self._check_collision()
         reached_goal = self._check_goal()
         terminated = collided or reached_goal
+
+        
+        new_distance = math.hypot(self.robot1.pos_x - self.goal[0], self.robot1.pos_y - self.goal[1]) 
+        
         
         if reached_goal:
             reward = 100
         elif collided:
             reward = -50
+        elif new_distance < prev_distance:
+            reward = 1
         else:
             reward = -.1
 
