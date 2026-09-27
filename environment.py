@@ -32,16 +32,14 @@ class RobotEnv(gym.Env):
             dtype=np.float32
         )
 
-
-
-
+        """Step Counter / Episode Length Limit
+        """
         self.step_count = 0
+        self.max_steps = 500
 
         """Robot Setup
         """
         self.robot1 = Robot("Robo1")
-
-
 
         """Wall and Goal Setup
         """
@@ -74,24 +72,17 @@ class RobotEnv(gym.Env):
 
         self.goal = (477.5, 377.5)
 
-
-
         """Time/dt Setup
         """
         self.dt = 1/60
 
 
-
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
 
-
-        self.step_count = 0
-
-
-
-        """Resetting Robot and Returning Observation
+        """Resetting Step Counter, Robot, and Returning Observation
         """
+        self.step_count = 0
         self.robot1.reset()
         obs = self._get_obs()
         return obs, {}
@@ -102,8 +93,6 @@ class RobotEnv(gym.Env):
         """Finding Robot Position
         """
         robot_position = (self.robot1.pos_x, self.robot1.pos_y)
-
-
 
         """Ray Direction and Distance Calulations
         """
@@ -116,8 +105,6 @@ class RobotEnv(gym.Env):
         left_dist = closest_hit(robot_position, ray_direction_left, self.walls)
         right_dist = closest_hit(robot_position, ray_direction_right, self.walls)
         back_dist = closest_hit(robot_position, ray_direction_back, self.walls)
-
-
 
         """Treating None Types
         """
@@ -136,14 +123,10 @@ class RobotEnv(gym.Env):
         scaled_left = left_dist/maximum
         scaled_right = right_dist/maximum
 
-
-
         """Finding Dx and Dy
         """
         dx = self.goal[0] - robot_position[0]
         dy = self.goal[1] - robot_position[1]
-
-
 
         """Angle to Goal
         """
@@ -151,8 +134,6 @@ class RobotEnv(gym.Env):
         proper_turn_angle = world_angle - self.robot1.theta
         normalized_turn_angle =(proper_turn_angle + math.pi) % (2 * math.pi) - math.pi
         scaled_turn_angle = normalized_turn_angle / math.pi
-
-
 
         """Returning Obs
         """
@@ -194,19 +175,15 @@ class RobotEnv(gym.Env):
     def step(self, action):
 
         self.step_count += 1
-        truncated = False
 
         """Apply Action Each Step
         """
         self._apply_action(action)
 
-
-
         """Finding Robot Position
         """
         robot_position = (self.robot1.pos_x, self.robot1.pos_y)
         prev_distance = math.hypot(self.robot1.pos_x - self.goal[0], self.robot1.pos_y - self.goal[1]) 
-
 
         """Ray Direction and Distance Calulations
         """
@@ -220,34 +197,24 @@ class RobotEnv(gym.Env):
         self.right_dist = closest_hit(robot_position, ray_direction_right, self.walls)
         self.back_dist = closest_hit(robot_position, ray_direction_back, self.walls)
 
-
-
         """Checking and Determining Speed
         """
         self.robot1.speed_check()
         self.robot1.total_velocity()      
 
-
-
         """Checking Robot Position and Next Move
         """
         self.robot1.boundaries_check(right_dist=self.right_dist, left_dist=self.left_dist, top_dist=self.front_dist, bottom_dist=self.back_dist)
-
 
         """Determining if next move is possible
         """
         self.robot1.pos_update(self.dt)
 
-
         """Checking Terminated and Returning Step Info
         """
         collided = self._check_collision()
         reached_goal = self._check_goal()
-        terminated = collided or reached_goal or truncated
-
-
-
-
+        terminated = collided or reached_goal
 
         new_distance = math.hypot(self.robot1.pos_x - self.goal[0], self.robot1.pos_y - self.goal[1]) 
 
@@ -260,13 +227,7 @@ class RobotEnv(gym.Env):
         else:
             reward = -.1
 
-
-        if self.step_count == 250:
-            truncated = True
-            reward = -50
-
-        
-        
+        truncated = self.step_count >= self.max_steps
 
         obs = self._get_obs()
-        return obs, reward, terminated, False, {}
+        return obs, reward, terminated, truncated, {}
