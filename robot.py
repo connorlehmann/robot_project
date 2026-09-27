@@ -10,7 +10,7 @@ class Robot:
         self.pos_x = random.uniform(415, 485)
         self.pos_y = random.uniform(315, 385)
         self.velo = 0
-        self.theta = 3
+        self.theta = random.uniform(0, 2 * math.pi)
         self.angular_velo = 0
         self.left_speed = 0
         self.right_speed = 0
