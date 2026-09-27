@@ -1,3 +1,4 @@
+import random
 import math
 wheel_base = 20
 class Robot:
@@ -6,8 +7,8 @@ class Robot:
         self.reset()
 
     def reset(self):
-        self.pos_x = 445
-        self.pos_y = 350
+        self.pos_x = random.uniform(415, 485)
+        self.pos_y = random.uniform(315, 385)
         self.velo = 0
         self.theta = 3
         self.angular_velo = 0
