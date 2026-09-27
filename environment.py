@@ -34,6 +34,9 @@ class RobotEnv(gym.Env):
 
 
 
+
+        self.step-self.step_count = 0
+
         """Robot Setup
         """
         self.robot1 = Robot("Robo1")
@@ -81,6 +84,11 @@ class RobotEnv(gym.Env):
 
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
+
+
+        self.step-self.step_count = 0
+
+
 
         """Resetting Robot and Returning Observation
         """
@@ -185,6 +193,9 @@ class RobotEnv(gym.Env):
     
     def step(self, action):
 
+        self.step_count += 1
+        truncated = False
+
         """Apply Action Each Step
         """
         self._apply_action(action)
@@ -227,18 +238,8 @@ class RobotEnv(gym.Env):
         """
         self.robot1.pos_update(self.dt)
 
-
-
-        """Checking Terminated and Returning Step Info
-        """
-        collided = self._check_collision()
-        reached_goal = self._check_goal()
-        terminated = collided or reached_goal
-
-        
         new_distance = math.hypot(self.robot1.pos_x - self.goal[0], self.robot1.pos_y - self.goal[1]) 
-        
-        
+
         if reached_goal:
             reward = 100
         elif collided:
@@ -247,6 +248,20 @@ class RobotEnv(gym.Env):
             reward = 1
         else:
             reward = -.1
+
+
+        if self.step_count == 250:
+            truncated = True
+            reward = -50
+
+        """Checking Terminated and Returning Step Info
+        """
+        collided = self._check_collision()
+        reached_goal = self._check_goal()
+        terminated = collided or reached_goal or truncated
+
+        
+        
 
         obs = self._get_obs()
         return obs, reward, terminated, False, {}
