@@ -238,6 +238,17 @@ class RobotEnv(gym.Env):
         """
         self.robot1.pos_update(self.dt)
 
+
+        """Checking Terminated and Returning Step Info
+        """
+        collided = self._check_collision()
+        reached_goal = self._check_goal()
+        terminated = collided or reached_goal or truncated
+
+
+
+
+
         new_distance = math.hypot(self.robot1.pos_x - self.goal[0], self.robot1.pos_y - self.goal[1]) 
 
         if reached_goal:
@@ -253,12 +264,6 @@ class RobotEnv(gym.Env):
         if self.step_count == 250:
             truncated = True
             reward = -50
-
-        """Checking Terminated and Returning Step Info
-        """
-        collided = self._check_collision()
-        reached_goal = self._check_goal()
-        terminated = collided or reached_goal or truncated
 
         
         
