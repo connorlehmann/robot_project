@@ -35,7 +35,7 @@ class RobotEnv(gym.Env):
 
 
 
-        self.step-self.step_count = 0
+        self.step_count = 0
 
         """Robot Setup
         """
