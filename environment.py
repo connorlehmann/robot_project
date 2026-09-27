@@ -86,7 +86,7 @@ class RobotEnv(gym.Env):
         super().reset(seed=seed)
 
 
-        self.step-self.step_count = 0
+        self.step_count = 0
 
 
 
