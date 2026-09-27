@@ -43,6 +43,7 @@ while True:
     radius = 10
     pygame.draw.circle(screen, (0, 255, 0), (int(cx), int(cy)), radius)
 
+    theta_text = font.render(f"Theta: {env.robot1.theta}", True, (255, 255, 255))
     left_text = font.render(f"Left Speed: {env.robot1.left_speed}", True, (255, 255, 255))
     right_text = font.render(f"Right Speed: {env.robot1.right_speed}", True, (255, 255, 255))
     reward_text = font.render(f"Reward: {reward:.2f}", True, (255, 255, 255))
