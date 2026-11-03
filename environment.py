@@ -218,14 +218,12 @@ class RobotEnv(gym.Env):
 
         new_distance = math.hypot(self.robot1.pos_x - self.goal[0], self.robot1.pos_y - self.goal[1]) 
 
+
+        reward = (prev_distance - new_distance) * 0.1 - 0.01
         if reached_goal:
-            reward = 100
-        elif collided:
-            reward = -50
-        elif new_distance < prev_distance:
-            reward = 1
-        else:
-            reward = -.1
+            reward += 50
+        if collided:
+            reward -= 20
 
         truncated = self.step_count >= self.max_steps
 
